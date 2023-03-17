@@ -16,6 +16,11 @@
 		C83D126B29B78BE900238B82 /* TrendingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83D126A29B78BE900238B82 /* TrendingViewController.swift */; };
 		C83D126F29B78C1200238B82 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83D126E29B78C1200238B82 /* SearchViewController.swift */; };
 		C83D127129B78C2000238B82 /* DownloadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83D127029B78C2000238B82 /* DownloadViewController.swift */; };
+		C8FC9D9729C3F34200B9DC6E /* HeaderHeroImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FC9D9629C3F34200B9DC6E /* HeaderHeroImageView.swift */; };
+		C8FC9D9A29C4C2AD00B9DC6E /* PosterCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FC9D9929C4C2AD00B9DC6E /* PosterCollectionView.swift */; };
+		C8FC9D9D29C4C56500B9DC6E /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FC9D9C29C4C56500B9DC6E /* Extensions.swift */; };
+		C8FC9D9F29C4DE9500B9DC6E /* PosterCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FC9D9E29C4DE9500B9DC6E /* PosterCollectionViewCell.swift */; };
+		C8FC9DA229C5169200B9DC6E /* PosterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FC9DA129C5169200B9DC6E /* PosterTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +35,11 @@
 		C83D126A29B78BE900238B82 /* TrendingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendingViewController.swift; sourceTree = "<group>"; };
 		C83D126E29B78C1200238B82 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		C83D127029B78C2000238B82 /* DownloadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadViewController.swift; sourceTree = "<group>"; };
+		C8FC9D9629C3F34200B9DC6E /* HeaderHeroImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderHeroImageView.swift; sourceTree = "<group>"; };
+		C8FC9D9929C4C2AD00B9DC6E /* PosterCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterCollectionView.swift; sourceTree = "<group>"; };
+		C8FC9D9C29C4C56500B9DC6E /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		C8FC9D9E29C4DE9500B9DC6E /* PosterCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterCollectionViewCell.swift; sourceTree = "<group>"; };
+		C8FC9DA129C5169200B9DC6E /* PosterTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +72,7 @@
 		C83D124B29B785DD00238B82 /* iTrailers */ = {
 			isa = PBXGroup;
 			children = (
+				C8FC9D9B29C4C55700B9DC6E /* Resources */,
 				C83D126529B7869500238B82 /* Managers */,
 				C83D126429B7868600238B82 /* NetworkManager */,
 				C83D126329B7867800238B82 /* Models */,
@@ -89,6 +100,10 @@
 		C83D126129B7864E00238B82 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				C8FC9D9629C3F34200B9DC6E /* HeaderHeroImageView.swift */,
+				C8FC9D9929C4C2AD00B9DC6E /* PosterCollectionView.swift */,
+				C8FC9D9E29C4DE9500B9DC6E /* PosterCollectionViewCell.swift */,
+				C8FC9DA129C5169200B9DC6E /* PosterTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -138,6 +153,14 @@
 			children = (
 			);
 			path = Other;
+			sourceTree = "<group>";
+		};
+		C8FC9D9B29C4C55700B9DC6E /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				C8FC9D9C29C4C56500B9DC6E /* Extensions.swift */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -210,9 +233,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C8FC9DA229C5169200B9DC6E /* PosterTableViewCell.swift in Sources */,
+				C8FC9D9F29C4DE9500B9DC6E /* PosterCollectionViewCell.swift in Sources */,
+				C8FC9D9A29C4C2AD00B9DC6E /* PosterCollectionView.swift in Sources */,
 				C83D126F29B78C1200238B82 /* SearchViewController.swift in Sources */,
+				C8FC9D9729C3F34200B9DC6E /* HeaderHeroImageView.swift in Sources */,
 				C83D124D29B785DD00238B82 /* AppDelegate.swift in Sources */,
 				C83D126729B7871B00238B82 /* TabBarViewController.swift in Sources */,
+				C8FC9D9D29C4C56500B9DC6E /* Extensions.swift in Sources */,
 				C83D127129B78C2000238B82 /* DownloadViewController.swift in Sources */,
 				C83D126B29B78BE900238B82 /* TrendingViewController.swift in Sources */,
 				C83D124F29B785DD00238B82 /* SceneDelegate.swift in Sources */,

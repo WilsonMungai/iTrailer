@@ -9,7 +9,12 @@ import UIKit
 
 class SearchViewController: UIViewController {
   
-    
+    let searchTabelView: UITableView = {
+        let tableView = UITableView(frame: .zero, style: .plain)
+        tableView.register(PosterTableViewCell.self, forCellReuseIdentifier: PosterTableViewCell.cellIdentifier)
+        tableView.separatorColor = UIColor.clear
+        return tableView
+    }()
     
     // search bar controller
     private let searchController: UISearchController = {
@@ -24,13 +29,48 @@ class SearchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        view.addSubview(searchTabelView)
 
         title = "Search"
         view.backgroundColor = .systemBackground
         
         // integrate the search controller onto our naivagation stack
         navigationItem.searchController = searchController
+        
+        tabelViewSetup()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        searchTabelView.frame = view.bounds
+    }
+    
+    private func tabelViewSetup() {
+        searchTabelView.delegate = self
+        searchTabelView.dataSource = self
     }
 
 
 }
+
+// MARK: - Table view extension
+extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 10
+    }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: PosterTableViewCell.cellIdentifier, for: indexPath)
+//        cell.backgroundColor = .systemCyan
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 320
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+}
+

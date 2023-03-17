@@ -29,7 +29,7 @@ class PosterTableViewCell: UITableViewCell {
         image.contentMode = .scaleAspectFill
         image.translatesAutoresizingMaskIntoConstraints = false
         image.clipsToBounds = true
-//        image.layer.cornerRadius = 10
+        image.layer.cornerRadius = 10
 //        image.layer.shadowColor = UIColor.label.cgColor
 //        image.layer.shadowOffset = CGSize(width: -4, height: 4)
 //        image.layer.shadowOpacity = 1

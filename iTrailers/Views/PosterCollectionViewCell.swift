@@ -19,7 +19,7 @@ class PosterCollectionViewCell: UICollectionViewCell {
         let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
         image.clipsToBounds = true
-        image.layer.cornerRadius = 5
+        image.layer.cornerRadius = 10
         image.layer.masksToBounds = true
         image.contentMode = .scaleAspectFill
         image.image = UIImage(named: "header")
@@ -68,7 +68,7 @@ class PosterCollectionViewCell: UICollectionViewCell {
     private func setUpLayer() {
         contentView.layer.cornerRadius = 10
         contentView.layer.shadowColor = UIColor.label.cgColor
-        contentView.layer.cornerRadius = 5
+        contentView.layer.cornerRadius = 10
         contentView.layer.shadowOffset = CGSize(width: -4, height: 4)
         contentView.layer.shadowOpacity = 0.2
     }
@@ -77,7 +77,7 @@ class PosterCollectionViewCell: UICollectionViewCell {
     private func addConstraint() {
         NSLayoutConstraint.activate([
             // poster image layout
-            posterImage.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 4),
+            posterImage.topAnchor.constraint(equalTo: contentView.topAnchor),
             posterImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             posterImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             

@@ -75,7 +75,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     
     // height of row
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 424
+        return 430
     }
     
     // title for the sextions

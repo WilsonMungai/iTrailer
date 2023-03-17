@@ -12,7 +12,7 @@ class DownloadViewController: UIViewController {
     let downloadTabelView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.register(PosterTableViewCell.self, forCellReuseIdentifier: PosterTableViewCell.cellIdentifier)
-        tableView.backgroundColor = UIColor.clear
+        tableView.separatorColor = UIColor.clear
         return tableView
     }()
 
@@ -50,7 +50,7 @@ extension DownloadViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 300
+        return 320
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

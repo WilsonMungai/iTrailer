@@ -21,6 +21,7 @@
 		C8FC9D9D29C4C56500B9DC6E /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FC9D9C29C4C56500B9DC6E /* Extensions.swift */; };
 		C8FC9D9F29C4DE9500B9DC6E /* PosterCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FC9D9E29C4DE9500B9DC6E /* PosterCollectionViewCell.swift */; };
 		C8FC9DA229C5169200B9DC6E /* PosterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FC9DA129C5169200B9DC6E /* PosterTableViewCell.swift */; };
+		C8FC9DA429C5311F00B9DC6E /* SearchResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FC9DA329C5311F00B9DC6E /* SearchResultViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +41,7 @@
 		C8FC9D9C29C4C56500B9DC6E /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		C8FC9D9E29C4DE9500B9DC6E /* PosterCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterCollectionViewCell.swift; sourceTree = "<group>"; };
 		C8FC9DA129C5169200B9DC6E /* PosterTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterTableViewCell.swift; sourceTree = "<group>"; };
+		C8FC9DA329C5311F00B9DC6E /* SearchResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -151,6 +153,7 @@
 		C83D126D29B78C0200238B82 /* Other */ = {
 			isa = PBXGroup;
 			children = (
+				C8FC9DA329C5311F00B9DC6E /* SearchResultViewController.swift */,
 			);
 			path = Other;
 			sourceTree = "<group>";
@@ -241,6 +244,7 @@
 				C83D124D29B785DD00238B82 /* AppDelegate.swift in Sources */,
 				C83D126729B7871B00238B82 /* TabBarViewController.swift in Sources */,
 				C8FC9D9D29C4C56500B9DC6E /* Extensions.swift in Sources */,
+				C8FC9DA429C5311F00B9DC6E /* SearchResultViewController.swift in Sources */,
 				C83D127129B78C2000238B82 /* DownloadViewController.swift in Sources */,
 				C83D126B29B78BE900238B82 /* TrendingViewController.swift in Sources */,
 				C83D124F29B785DD00238B82 /* SceneDelegate.swift in Sources */,

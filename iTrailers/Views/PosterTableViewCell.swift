@@ -14,12 +14,26 @@ class PosterTableViewCell: UITableViewCell {
     
     // MARK: - UI components
     private let posterImage: UIImageView = {
-        let image = UIImageView()
+        
+        let outerView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+        outerView.clipsToBounds = false
+        outerView.layer.shadowColor = UIColor.black.cgColor
+        outerView.layer.shadowOpacity = 1
+        outerView.layer.shadowOffset = CGSize.zero
+        outerView.layer.shadowRadius = 10
+        outerView.layer.shadowPath = UIBezierPath(roundedRect: outerView.bounds, cornerRadius: 10).cgPath
+        
+        
+        let image = UIImageView(frame: outerView.bounds)
         image.image = UIImage(named: "header")
         image.contentMode = .scaleAspectFill
         image.translatesAutoresizingMaskIntoConstraints = false
         image.clipsToBounds = true
-        image.layer.cornerRadius = 20
+//        image.layer.cornerRadius = 10
+//        image.layer.shadowColor = UIColor.label.cgColor
+//        image.layer.shadowOffset = CGSize(width: -4, height: 4)
+//        image.layer.shadowOpacity = 1
+        outerView.addSubview(image)
         return image
     }()
     
@@ -41,6 +55,19 @@ class PosterTableViewCell: UITableViewCell {
         button.tintColor = .secondaryLabel
         return button
     }()
+    
+    
+    
+    private func imageOuterView() {
+        let outerView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+        outerView.clipsToBounds = false
+        outerView.layer.shadowColor = UIColor.black.cgColor
+        outerView.layer.shadowOpacity = 1
+        outerView.layer.shadowOffset = CGSize.zero
+        outerView.layer.shadowRadius = 10
+        outerView.layer.shadowPath = UIBezierPath(roundedRect: outerView.bounds, cornerRadius: 10).cgPath
+        outerView.addSubview(posterImage)
+    }
     
     
     // MARK: - initializer

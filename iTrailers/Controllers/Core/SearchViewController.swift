@@ -13,7 +13,7 @@ class SearchViewController: UIViewController {
         super.viewDidLoad()
 
         title = "Search"
-        view.backgroundColor = .systemPink
+        view.backgroundColor = .systemBackground
     }
 
 

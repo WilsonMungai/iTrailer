@@ -13,6 +13,6 @@ class TrendingViewController: UIViewController {
         super.viewDidLoad()
         
         title = "Trending"
-        view.backgroundColor = .systemPurple
+        view.backgroundColor = .systemBackground
     }
 }

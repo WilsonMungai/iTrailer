@@ -20,7 +20,7 @@ class PosterCollectionView: UITableViewCell {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 10, right: 10)
-        layout.itemSize = CGSize(width: 200, height: 400)
+        layout.itemSize = CGSize(width: 200, height: 300)
         // create collection view with the layout specified
         let collectionView = UICollectionView(frame:.zero, collectionViewLayout: layout)
         // register cell

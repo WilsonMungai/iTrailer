@@ -19,6 +19,7 @@ class HomeViewController: UIViewController {
         tableView.register(PosterCollectionView.self,
                            forCellReuseIdentifier: PosterCollectionView.cellIdentifier)
         tableView.separatorColor = UIColor.clear
+        tableView.showsVerticalScrollIndicator = false
         return tableView
     }()
 
@@ -42,14 +43,17 @@ class HomeViewController: UIViewController {
     // MARK: - Private methods
     // table view setup
     private func tableViewSetup() {
+        
         homeTableView.delegate = self
         homeTableView.dataSource = self
+        // ignore safe area
         homeTableView.contentInsetAdjustmentBehavior = .never
-        
+        // header image
         headerView = HeaderHeroImageView(frame: CGRect(x: 0,
                                                        y: 0,
                                                        width: view.bounds.width,
                                                        height: view.bounds.height/2))
+        // header view
         homeTableView.tableHeaderView = headerView
         
     }
@@ -75,7 +79,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     
     // height of row
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 430
+        return 330
     }
     
     // title for the sextions
@@ -90,9 +94,12 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         guard let header = view as? UITableViewHeaderFooterView else { return }
-        header.textLabel?.font = .systemFont(ofSize: 18, weight: .semibold)
+        header.textLabel?.font = .systemFont(ofSize: 20, weight: .semibold)
         header.textLabel?.text = header.textLabel?.text?.capitalized
-        header.textLabel?.frame = CGRect(x: header.bounds.origin.x + 20, y: header.bounds.origin.y, width: 100, height: header.bounds.height)
+        header.textLabel?.frame = CGRect(x: header.bounds.origin.x + 20,
+                                         y: header.bounds.origin.y,
+                                         width: header.bounds.width,
+                                         height: header.bounds.height)
         header.textLabel?.textColor = .label
     }
     

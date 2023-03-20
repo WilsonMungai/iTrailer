@@ -14,6 +14,7 @@ class TrendingViewController: UIViewController {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.register(PosterTableViewCell.self, forCellReuseIdentifier: PosterTableViewCell.cellIdentifier)
         tableView.separatorColor = UIColor.clear
+        tableView.showsVerticalScrollIndicator = false
         return tableView
     }()
     
@@ -49,7 +50,7 @@ extension TrendingViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 300
+        return 220
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

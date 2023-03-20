@@ -19,19 +19,19 @@ class PosterCollectionViewCell: UICollectionViewCell {
         let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
         image.clipsToBounds = true
-        image.layer.cornerRadius = 10
         image.layer.masksToBounds = true
         image.contentMode = .scaleAspectFill
         image.image = UIImage(named: "header")
         return image
     }()
-    
+    // poster label
     private let posterLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 16, weight: .semibold)
         label.textColor = .label
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Movie Name, Movie Name, Movie Name"
+        label.textAlignment = .center
         label.numberOfLines = 0
         return label
     }()
@@ -46,16 +46,20 @@ class PosterCollectionViewCell: UICollectionViewCell {
         label.numberOfLines = 0
         return label
     }()
-    
-    
-    
+
     // MARK: - init
     override init(frame: CGRect) {
         super.init(frame: frame)
-        contentView.addSubviews(posterImage,
-                                posterLabel)
+        // add subviews
+        contentView.addSubviews(posterImage,posterLabel)
+        
+        // cell background color
         contentView.backgroundColor = .secondarySystemBackground
+        
+        // content view layer
         setUpLayer()
+        
+        // layout constraint
         addConstraint()
     }
     
@@ -68,7 +72,6 @@ class PosterCollectionViewCell: UICollectionViewCell {
     private func setUpLayer() {
         contentView.layer.cornerRadius = 10
         contentView.layer.shadowColor = UIColor.label.cgColor
-        contentView.layer.cornerRadius = 10
         contentView.layer.shadowOffset = CGSize(width: -4, height: 4)
         contentView.layer.shadowOpacity = 0.2
     }

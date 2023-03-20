@@ -12,10 +12,10 @@ class HeaderHeroImageView: UIView {
     // MARK: - UI elements
     private let heroImageView: UIImageView = {
         let imageView = UIImageView()
-//        imageView.layer.masksToBounds = true
-        imageView.clipsToBounds = true
-        imageView.contentMode = .scaleAspectFill
         imageView.image = UIImage(named: "header")
+        imageView.contentMode = .scaleAspectFill
+        imageView.layer.masksToBounds = true
+        imageView.clipsToBounds = true
         return imageView
     }()
 
@@ -23,7 +23,6 @@ class HeaderHeroImageView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubview(heroImageView)
-        backgroundColor = .systemBlue
     }
     
     required init?(coder: NSCoder) {

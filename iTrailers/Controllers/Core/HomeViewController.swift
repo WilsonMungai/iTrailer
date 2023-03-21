@@ -33,6 +33,15 @@ class HomeViewController: UIViewController {
         tableViewSetup()
         
         view.backgroundColor = .systemBackground
+        
+        NetworkService.shared.getTrending { result in
+            switch result {
+            case .success(let success): break
+                //
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
     }
     
     override func viewDidLayoutSubviews() {

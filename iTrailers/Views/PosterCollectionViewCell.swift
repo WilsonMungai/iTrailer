@@ -92,4 +92,6 @@ class PosterCollectionViewCell: UICollectionViewCell {
             posterLabel.heightAnchor.constraint(equalToConstant: 50),
         ])
     }
+    
+    // MARK: - public configuration
 }

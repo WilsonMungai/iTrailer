@@ -13,6 +13,8 @@ class PosterCollectionView: UITableViewCell {
     // cell identifier
     static let cellIdentifier = "PosterCollectionView"
     
+    private var trendingPoster: [Trending] = [Trending]()
+    
     // MARK: - UI elements
     // collection view
     let collectionView: UICollectionView = {
@@ -53,17 +55,26 @@ class PosterCollectionView: UITableViewCell {
         collectionView.delegate = self
         collectionView.dataSource = self
     }
+    
+    public func configure(with trending: [Trending]) {
+        trendingPoster = trending
+        DispatchQueue.main.async { [weak self] in
+            self?.collectionView.reloadData()
+        }
+    }
 }
 
 // MARK: - collection view setup
 extension PosterCollectionView: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return trendingPoster.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PosterCollectionViewCell.cellIdentifier, for: indexPath)
-//        cell.backgroundColor = .systemGray
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PosterCollectionViewCell.cellIdentifier, for: indexPath) as? PosterCollectionViewCell else {return UICollectionViewCell()}
+        let posterTitle = trendingPoster[indexPath.row].originalTitle ?? trendingPoster[indexPath.row].title ?? ""
+        guard let tendingPoster = trendingPoster[indexPath.row].posterPath else { return UICollectionViewCell() }
+        cell.configure(with: TrendingViewModel(trendingPosterUrl: tendingPoster, trendingPosterName: posterTitle))
         return cell
     }
 }

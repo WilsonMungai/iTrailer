@@ -14,18 +14,18 @@ struct TrendingResult: Codable {
 
 // MARK: - Result
 struct Trending: Codable {
-    let adult: Bool
-    let backdropPath: String
-    let id: Int
-    let title: String
-    let originalLanguage: OriginalLanguage
-    let originalTitle, overview, posterPath: String
-    let mediaType: String
-    let popularity: Double
-    let releaseDate: String
-    let video: Bool
-    let voteAverage: Double
-    let voteCount: Int
+    let adult: Bool?
+    let backdropPath: String?
+    let id: Int?
+    let title: String?
+    let originalLanguage: OriginalLanguage?
+    let originalTitle, overview, posterPath: String?
+    let mediaType: String?
+    let popularity: Double?
+    let releaseDate: String?
+    let video: Bool?
+    let voteAverage: Double?
+    let voteCount: Int?
 
     enum CodingKeys: String, CodingKey {
         case adult

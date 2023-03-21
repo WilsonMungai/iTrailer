@@ -6,12 +6,15 @@
 //
 
 import UIKit
+import SDWebImage
 
 // Collection view cell , holds poster data
 class PosterCollectionViewCell: UICollectionViewCell {
     
     // cell identifier
     static let cellIdentifier = "PosterCollectionViewCell"
+    
+//    let viewModel: TrendingViewModel
     
     // MARK: - UI components
     // poster image view
@@ -94,4 +97,10 @@ class PosterCollectionViewCell: UICollectionViewCell {
     }
     
     // MARK: - public configuration
+    // configure view model to the cell
+    public func configure(with viewModel: TrendingViewModel) {
+        posterLabel.text = viewModel.trendingPosterName
+        guard let url = URL(string: "https://image.tmdb.org/t/p/w500/\(viewModel.trendingPosterUrl)") else { return }
+        posterImage.sd_setImage(with: url, completed: nil)
+    }
 }

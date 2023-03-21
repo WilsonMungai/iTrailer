@@ -25,8 +25,7 @@ class NetworkService {
             do {
 //                let result = try JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed)
                 let result = try JSONDecoder().decode(TrendingResult.self, from: data)
-                print(result)
-//                completion(.success(result))
+                completion(.success(result.results))
             } catch {
                 print(error.localizedDescription)
             }

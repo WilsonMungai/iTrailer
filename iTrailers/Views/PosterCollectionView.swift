@@ -71,6 +71,7 @@ extension PosterCollectionView: UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PosterCollectionViewCell.cellIdentifier, for: indexPath) as? PosterCollectionViewCell else {return UICollectionViewCell()}
         let posterTitle = trendingPoster[indexPath.row].originalTitle ?? trendingPoster[indexPath.row].title ?? ""
         guard let tendingPoster = trendingPoster[indexPath.row].posterPath else { return UICollectionViewCell() }

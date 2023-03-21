@@ -24,6 +24,7 @@
 		C843CAA629CA08A000ABA7C9 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = C843CAA529CA08A000ABA7C9 /* SDWebImage */; };
 		C843CAA829CA08A000ABA7C9 /* SDWebImageMapKit in Frameworks */ = {isa = PBXBuildFile; productRef = C843CAA729CA08A000ABA7C9 /* SDWebImageMapKit */; };
 		C843CAAA29CA0DC800ABA7C9 /* HomeTableSections.swift in Sources */ = {isa = PBXBuildFile; fileRef = C843CAA929CA0DC800ABA7C9 /* HomeTableSections.swift */; };
+		C843CAAC29CA1C8100ABA7C9 /* TrendingTv.swift in Sources */ = {isa = PBXBuildFile; fileRef = C843CAAB29CA1C8100ABA7C9 /* TrendingTv.swift */; };
 		C8FC9D9729C3F34200B9DC6E /* HeaderHeroImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FC9D9629C3F34200B9DC6E /* HeaderHeroImageView.swift */; };
 		C8FC9D9A29C4C2AD00B9DC6E /* PosterCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FC9D9929C4C2AD00B9DC6E /* PosterCollectionView.swift */; };
 		C8FC9D9D29C4C56500B9DC6E /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FC9D9C29C4C56500B9DC6E /* Extensions.swift */; };
@@ -50,6 +51,7 @@
 		C843CAA029C9FBAF00ABA7C9 /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
 		C843CAA229CA057200ABA7C9 /* TrendingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendingViewModel.swift; sourceTree = "<group>"; };
 		C843CAA929CA0DC800ABA7C9 /* HomeTableSections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableSections.swift; sourceTree = "<group>"; };
+		C843CAAB29CA1C8100ABA7C9 /* TrendingTv.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendingTv.swift; sourceTree = "<group>"; };
 		C8FC9D9629C3F34200B9DC6E /* HeaderHeroImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderHeroImageView.swift; sourceTree = "<group>"; };
 		C8FC9D9929C4C2AD00B9DC6E /* PosterCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterCollectionView.swift; sourceTree = "<group>"; };
 		C8FC9D9C29C4C56500B9DC6E /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -138,6 +140,7 @@
 			isa = PBXGroup;
 			children = (
 				C843CA9A29C9F58D00ABA7C9 /* Trending.swift */,
+				C843CAAB29CA1C8100ABA7C9 /* TrendingTv.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -277,6 +280,7 @@
 				C83D126729B7871B00238B82 /* TabBarViewController.swift in Sources */,
 				C8FC9D9D29C4C56500B9DC6E /* Extensions.swift in Sources */,
 				C8FC9DA429C5311F00B9DC6E /* SearchResultViewController.swift in Sources */,
+				C843CAAC29CA1C8100ABA7C9 /* TrendingTv.swift in Sources */,
 				C843CA9D29C9F79200ABA7C9 /* NetworkService.swift in Sources */,
 				C843CAA329CA057200ABA7C9 /* TrendingViewModel.swift in Sources */,
 				C843CAAA29CA0DC800ABA7C9 /* HomeTableSections.swift in Sources */,

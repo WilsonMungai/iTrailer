@@ -32,4 +32,23 @@ class NetworkService {
         }
         task.resume()
     }
+    
+//    https://api.themoviedb.org/3/trending/tv/day?api_key=53bb76834e431dda9c6ac64c32ec35a5
+    func getTrendingTv(completion: @escaping (Result<[TrendingTv], Error>) -> Void) {
+        guard let url = URL(string: "\(Constants.baseUrl)/3/trending/tv/day?api_key=\(Constants.apiKey)") else { return }
+        let task = URLSession.shared.dataTask(with: url) { data, _, error in
+            guard let data = data, error == nil else {
+                return
+            }
+            
+            do {
+//                let result = try JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed)
+                let result = try JSONDecoder().decode(TrendingTvResponse.self, from: data)
+                print(result)
+            } catch {
+                print(error)
+            }
+        }
+        task.resume()
+    }
 }

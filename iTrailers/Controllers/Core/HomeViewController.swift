@@ -33,6 +33,15 @@ class HomeViewController: UIViewController {
         tableViewSetup()
         
         view.backgroundColor = .systemBackground
+        
+        NetworkService.shared.getTrendingTv { result in
+            switch result {
+            case .success(let success):
+                print(success)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
     }
     
     override func viewDidLayoutSubviews() {
@@ -75,19 +84,19 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: PosterCollectionView.cellIdentifier, for: indexPath) as? PosterCollectionView else { return UITableViewCell() }
         
-        switch indexPath.section {
-        case HomeTableSections.TrendingMovies.rawValue:
-            NetworkService.shared.getTrending { result in
-                switch result {
-                case .success(let trending):
-                    cell.configure(with: trending)
-                case .failure(let error):
-                    print(error.localizedDescription)
-                }
-            }
-        default:
-            break
-        }
+//        switch indexPath.section {
+//        case HomeTableSections.TrendingMovies.rawValue:
+//            NetworkService.shared.getTrending { result in
+//                switch result {
+//                case .success(let trending):
+//                    cell.configure(with: trending)
+//                case .failure(let error):
+//                    print(error.localizedDescription)
+//                }
+//            }
+//        default:
+//            break
+//        }
         
         return cell
     }

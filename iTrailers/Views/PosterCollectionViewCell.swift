@@ -30,7 +30,7 @@ class PosterCollectionViewCell: UICollectionViewCell {
     // poster label
     private let posterLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 16, weight: .semibold)
+        label.font = .systemFont(ofSize: 14, weight: .semibold)
         label.textColor = .label
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Movie Name, Movie Name, Movie Name"
@@ -41,7 +41,7 @@ class PosterCollectionViewCell: UICollectionViewCell {
     
     private let posterType: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 14, weight: .semibold)
+        label.font = .systemFont(ofSize: 12, weight: .semibold)
         label.textColor = .secondaryLabel
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
@@ -86,13 +86,15 @@ class PosterCollectionViewCell: UICollectionViewCell {
             posterImage.topAnchor.constraint(equalTo: contentView.topAnchor),
             posterImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             posterImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+//            posterImage.heightAnchor.constraint(equalToConstant: 200),
+//            posterImage.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -4),
             
             // poster name constraint
             posterLabel.topAnchor.constraint(equalTo: posterImage.bottomAnchor),
             posterLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
             posterLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
             posterLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            posterLabel.heightAnchor.constraint(equalToConstant: 50),
+            posterLabel.heightAnchor.constraint(equalToConstant: 35),
         ])
     }
     

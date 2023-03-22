@@ -5,15 +5,20 @@
 //  Created by Wilson Mungai on 2023-03-21.
 //
 
+//https://api.themoviedb.org/3/trending/movie/day?api_key=53bb76834e431dda9c6ac64c32ec35a5
+//https://api.themoviedb.org/3/movie/popular?api_key=53bb76834e431dda9c6ac64c32ec35a5&language=en-US&page=1
+//https://api.themoviedb.org/3/movie/top_rated?api_key=53bb76834e431dda9c6ac64c32ec35a5&language=en-US&page=1
+//https://api.themoviedb.org/3/movie/now_playing?api_key=53bb76834e431dda9c6ac64c32ec35a5&language=en-US&page=1
+//https://api.themoviedb.org/3/movie/upcoming?api_key=53bb76834e431dda9c6ac64c32ec35a5&language=en-US&page=1
 import Foundation
 
 // MARK: - Welcome
-struct TrendingResult: Codable {
-    let results: [Trending]
+struct MovieResult: Codable {
+    let results: [Movie]
 }
 
 // MARK: - Result
-struct Trending: Codable {
+struct Movie: Codable {
     let adult: Bool?
     let backdropPath: String?
     let id: Int?
@@ -50,6 +55,7 @@ struct Trending: Codable {
 
 enum OriginalLanguage: String, Codable {
     case en = "en"
+    case es = "es"
     case fr = "fr"
     case nl = "nl"
 }

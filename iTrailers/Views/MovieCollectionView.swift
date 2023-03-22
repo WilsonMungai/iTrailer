@@ -8,16 +8,17 @@
 import UIKit
 
 // Responsible for showing the video posters collection view
-class PosterCollectionView: UITableViewCell {
+class MovieCollectionView: UITableViewCell {
     
     // cell identifier
     static let cellIdentifier = "PosterCollectionView"
     
-    private var trendingPoster: [Trending] = [Trending]()
+    private var moviePoster: [Movie] = [Movie]()
+    
     
     // MARK: - UI elements
     // collection view
-    let collectionView: UICollectionView = {
+    let movieCollectionView: UICollectionView = {
         // setup collection view layout
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -32,12 +33,15 @@ class PosterCollectionView: UITableViewCell {
         return collectionView
     }()
     
+    
+    // MARK: - Lifecycle methods
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        contentView.addSubview(collectionView)
+        
+        contentView.addSubviews(movieCollectionView)
         
         // collection view setup
-        collectionViewSetup()
+        movieCollectionViewSetup()
     }
     
     required init?(coder: NSCoder) {
@@ -47,35 +51,38 @@ class PosterCollectionView: UITableViewCell {
     // Set up frame
     override func layoutSubviews() {
         super.layoutSubviews()
-        collectionView.frame = contentView.bounds
+        movieCollectionView.frame = contentView.bounds
     }
     
+    // MARK: - Private methods
     // collection view setup
-    private func collectionViewSetup() {
-        collectionView.delegate = self
-        collectionView.dataSource = self
+    private func movieCollectionViewSetup() {
+        movieCollectionView.delegate = self
+        movieCollectionView.dataSource = self
     }
     
-    public func configure(with trending: [Trending]) {
-        trendingPoster = trending
+    // MARK: - Pulic methods
+    // configure
+    public func configure(with movie: [Movie]) {
+        moviePoster = movie
         DispatchQueue.main.async { [weak self] in
-            self?.collectionView.reloadData()
+            self?.movieCollectionView.reloadData()
         }
     }
 }
 
-// MARK: - collection view setup
-extension PosterCollectionView: UICollectionViewDelegate, UICollectionViewDataSource {
+// MARK: - Xxtension
+extension MovieCollectionView: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return trendingPoster.count
+        return moviePoster.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PosterCollectionViewCell.cellIdentifier, for: indexPath) as? PosterCollectionViewCell else {return UICollectionViewCell()}
-        let posterTitle = trendingPoster[indexPath.row].originalTitle ?? trendingPoster[indexPath.row].title ?? ""
-        guard let tendingPoster = trendingPoster[indexPath.row].posterPath else { return UICollectionViewCell() }
+        let posterTitle = moviePoster[indexPath.row].originalTitle ?? moviePoster[indexPath.row].title ?? ""
+        guard let tendingPoster = moviePoster[indexPath.row].posterPath else { return UICollectionViewCell() }
         cell.configure(with: TrendingViewModel(trendingPosterUrl: tendingPoster, trendingPosterName: posterTitle))
         return cell
+        
     }
 }

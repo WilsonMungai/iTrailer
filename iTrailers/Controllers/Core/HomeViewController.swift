@@ -11,13 +11,13 @@ class HomeViewController: UIViewController {
     
     private var headerView: HeaderHeroImageView?
     
-    let sectionTitle: [String] = ["Trending Movies", "Trending Tv", "Popular", "Upcoming Movies", "Top Rated"]
+    let sectionTitle: [String] = ["Trending Movies", "Popular", "Now Playing", "Upcoming Movies", "Top Rated"]
     
     //MARK: - UI elements
     private let homeTableView: UITableView = {
         let tableView = UITableView()
-        tableView.register(PosterCollectionView.self,
-                           forCellReuseIdentifier: PosterCollectionView.cellIdentifier)
+        tableView.register(MovieCollectionView.self,
+                           forCellReuseIdentifier: MovieCollectionView.cellIdentifier)
         tableView.separatorColor = UIColor.clear
         tableView.showsVerticalScrollIndicator = false
         return tableView
@@ -34,14 +34,14 @@ class HomeViewController: UIViewController {
         
         view.backgroundColor = .systemBackground
         
-        NetworkService.shared.getTrendingTv { result in
-            switch result {
-            case .success(let success):
-                print(success)
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
-        }
+//        NetworkService.shared.getTrendingTv { result in
+//            switch result {
+//            case .success(let success):
+//                print(success)
+//            case .failure(let error):
+//                print(error.localizedDescription)
+//            }
+//        }
     }
     
     override func viewDidLayoutSubviews() {
@@ -82,21 +82,40 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: PosterCollectionView.cellIdentifier, for: indexPath) as? PosterCollectionView else { return UITableViewCell() }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: MovieCollectionView.cellIdentifier, for: indexPath) as? MovieCollectionView else { return UITableViewCell() }
         
-//        switch indexPath.section {
-//        case HomeTableSections.TrendingMovies.rawValue:
-//            NetworkService.shared.getTrending { result in
+        switch indexPath.section {
+            
+        case TableSections.Trending.rawValue:
+            NetworkService.shared.getTrendingMovie { result in
+                switch result {
+                case .success(let movie):
+                    cell.configure(with: movie)
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
+            
+        case TableSections.Popular.rawValue:
+            NetworkService.shared.getPopularMovies {  result in
+                switch result {
+                case .success(let movie):
+                    cell.configure(with: movie)
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
+//        case HomeTableSections.TrendingTv.rawValue:
+//            NetworkService.shared.getTrendingTv { result in
 //                switch result {
-//                case .success(let trending):
-//                    cell.configure(with: trending)
+//                case .success(let trendingTv):
+//                    cell.configure(with: trendingTv)
 //                case .failure(let error):
-//                    print(error.localizedDescription)
+//                    print(error)
 //                }
 //            }
-//        default:
-//            break
-//        }
+        default: return UITableViewCell()
+        }
         
         return cell
     }

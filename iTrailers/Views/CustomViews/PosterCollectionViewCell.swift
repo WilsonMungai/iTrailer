@@ -38,17 +38,6 @@ class PosterCollectionViewCell: UICollectionViewCell {
         label.numberOfLines = 0
         return label
     }()
-    
-    private let posterType: UILabel = {
-        let label = UILabel()
-        label.font = .systemFont(ofSize: 12, weight: .semibold)
-        label.textColor = .secondaryLabel
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.numberOfLines = 0
-        label.text = "Movie Name"
-        label.numberOfLines = 0
-        return label
-    }()
 
     // MARK: - init
     override init(frame: CGRect) {

@@ -28,7 +28,7 @@ class ShowsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(trendingTableView)
-        title = "Trending"
+        title = "Tv Shows"
         view.backgroundColor = .systemBackground
         tabelViewSetup()
     }
@@ -100,7 +100,7 @@ extension ShowsViewController: UITableViewDelegate, UITableViewDataSource {
                     print(error.localizedDescription)
                 }
             }
-        default: break
+        default: return UITableViewCell()
         }
         
         return cell

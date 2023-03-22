@@ -11,7 +11,7 @@ class HomeViewController: UIViewController {
     
     private var headerView: HeaderHeroImageView?
     
-    let sectionTitle: [String] = ["Trending Movies", "Popular", "Now Playing", "Upcoming Movies", "Top Rated"]
+    let sectionTitle: [String] = ["Trending Movies", "Popular", "Now Playing", "Top Rated", "Upcoming Movies"]
     
     //MARK: - UI elements
     private let homeTableView: UITableView = {
@@ -132,16 +132,6 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
                     print(error.localizedDescription)
                 }
             }
-            
-//        case HomeTableSections.TrendingTv.rawValue:
-//            NetworkService.shared.getTrendingTv { result in
-//                switch result {
-//                case .success(let trendingTv):
-//                    cell.configure(with: trendingTv)
-//                case .failure(let error):
-//                    print(error)
-//                }
-//            }
         default: return UITableViewCell()
         }
         

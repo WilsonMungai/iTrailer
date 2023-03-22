@@ -71,10 +71,14 @@ extension ShowsCollectionView: UICollectionViewDelegate, UICollectionViewDataSou
     
     // data displayed in the cell
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PosterCollectionViewCell.cellIdentifier, for: indexPath) as? PosterCollectionViewCell else { return UICollectionViewCell()}
-        let posterTitle = trendingTv[indexPath.row].name ?? trendingTv[indexPath.row].originalName ?? ""
-        guard let posterImage = trendingTv[indexPath.row].posterPath else { return UICollectionViewCell() }
-        cell.configure(with: TrendingViewModel(trendingPosterUrl: posterImage, trendingPosterName: posterTitle))
-        return cell
+//        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PosterCollectionViewCell.cellIdentifier, for: indexPath) as? PosterCollectionViewCell else { return UICollectionViewCell()}
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PosterCollectionViewCell.cellIdentifier, for: indexPath)
+        if let gridCell = cell as? PosterCollectionViewCell {
+                    // TODO: configure cell
+            let posterTitle = trendingTv[indexPath.row].name ?? trendingTv[indexPath.row].originalName ?? ""
+            guard let posterImage = trendingTv[indexPath.row].posterPath else { return UICollectionViewCell() }
+            gridCell.configure(with: TrendingViewModel(trendingPosterUrl: posterImage, trendingPosterName: posterTitle))
+                }
+                return cell
     }
 }

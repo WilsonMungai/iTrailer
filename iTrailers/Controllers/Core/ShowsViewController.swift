@@ -82,6 +82,15 @@ extension ShowsViewController: UITableViewDelegate, UITableViewDataSource {
                     print(error.localizedDescription)
                 }
             }
+        case TableSections.NowPlaying.rawValue:
+            NetworkService.shared.getAiringTodayTv { result in
+                switch result {
+                case .success(let tv):
+                    cell.configure(with: tv)
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
         default: break
         }
         

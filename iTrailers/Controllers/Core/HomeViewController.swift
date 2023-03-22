@@ -106,6 +106,15 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
                 }
             }
         case TableSections.NowPlaying.rawValue:
+            NetworkService.shared.getNowPlayingMovies { result in
+                switch result {
+                case .success(let movie):
+                    cell.configure(with: movie)
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
+        case TableSections.TopRated.rawValue:
             NetworkService.shared.getTopRatedMovies { result in
                 switch result {
                 case .success(let movie):

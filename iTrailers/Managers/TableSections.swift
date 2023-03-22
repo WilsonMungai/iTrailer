@@ -11,6 +11,6 @@ enum TableSections: Int {
     case Trending = 0
     case Popular = 1
     case NowPlaying = 2
-    case Upcoming = 3
-    case TopRated = 4
+    case TopRated = 3
+    case Upcoming = 4
 }

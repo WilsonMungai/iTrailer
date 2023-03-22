@@ -9,8 +9,11 @@ import Foundation
 import UIKit
 
 class ShowsCollectionView: UITableViewCell {
+    
+    // trending tv object
     private var trendingTv: [TrendingTv] = [TrendingTv]()
     
+    // cell idnetifier
     static let cellIdentifier = "ShowsCollectionView"
     
     // collection view
@@ -63,12 +66,15 @@ class ShowsCollectionView: UITableViewCell {
 extension ShowsCollectionView: UICollectionViewDelegate, UICollectionViewDataSource {
     // number of shows returned per section
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return trendingTv.count
     }
     
     // data displayed in the cell
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PosterCollectionViewCell.cellIdentifier, for: indexPath)
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PosterCollectionViewCell.cellIdentifier, for: indexPath) as? PosterCollectionViewCell else { return UICollectionViewCell()}
+        let posterTitle = trendingTv[indexPath.row].name ?? trendingTv[indexPath.row].originalName ?? ""
+        guard let posterImage = trendingTv[indexPath.row].posterPath else { return UICollectionViewCell() }
+        cell.configure(with: TrendingViewModel(trendingPosterUrl: posterImage, trendingPosterName: posterTitle))
         return cell
     }
 }

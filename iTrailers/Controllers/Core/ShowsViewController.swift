@@ -8,7 +8,11 @@
 import UIKit
 
 class ShowsViewController: UIViewController {
+    
+    // titles of header sections
     private var sectionTitle: [String] = ["Trending Tv", "Popular Tv", "Airing Today", "Top Rated"]
+    
+    // object of TrendingTv model
     private var showPoster: [TrendingTv] = [TrendingTv]()
     
     // MARK: - UI component
@@ -56,23 +60,50 @@ extension ShowsViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: ShowsCollectionView.cellIdentifier, for: indexPath)
-//        cell.backgroundColor = .systemCyan
+        
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: ShowsCollectionView.cellIdentifier, for: indexPath) as? ShowsCollectionView else { return UITableViewCell() }
+        
+        switch indexPath.section {
+        case TableSections.Trending.rawValue:
+            NetworkService.shared.getTrendingTv { result in
+                switch result {
+                case .success(let tv):
+                    cell.configure(with: tv)
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
+        case TableSections.Popular.rawValue:
+            NetworkService.shared.getPopularTv { result in
+                switch result {
+                case .success(let tv):
+                    cell.configure(with: tv)
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
+        default: break
+        }
+        
         return cell
     }
     
+    // height of row holding the collection view
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 330
     }
     
+    // title for each section
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return sectionTitle[section]
     }
     
+    // header height of title section
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 10
     }
     
+    // header title setup
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         guard let header = view as? UITableViewHeaderFooterView else { return }
         header.textLabel?.font = .systemFont(ofSize: 20, weight: .semibold)
@@ -84,6 +115,7 @@ extension ShowsViewController: UITableViewDelegate, UITableViewDataSource {
         header.textLabel?.textColor = .label
     }
     
+    // when cell is selected
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
     }

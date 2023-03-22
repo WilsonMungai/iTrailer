@@ -142,7 +142,7 @@ class NetworkService {
     // fetch popular tv
     //https://api.themoviedb.org/3/tv/popular?api_key=53bb76834e431dda9c6ac64c32ec35a5&language=en-US&page=1
     func getPopularTv(completion: @escaping (Result<[TrendingTv], Error>) -> Void ) {
-        guard let url = URL(string: "\(Constants.baseUrl)/3/tv/popular?api_key=\(Constants.apiKey)") else { return }
+        guard let url = URL(string: "\(Constants.baseUrl)/3/tv/popular?api_key=\(Constants.apiKey)&language=en-US&page=1") else { return }
         let task = URLSession.shared.dataTask(with: url) { data, _, error in
             guard let data = data, error == nil else {
                 completion(.failure(error ?? ApiError.failedToGetData))
@@ -162,7 +162,7 @@ class NetworkService {
     // fetch airing today tv
     //https://api.themoviedb.org/3/tv/airing_today?api_key=53bb76834e431dda9c6ac64c32ec35a5&language=en-US&page=1
     func getAiringTodayTv(completion: @escaping (Result<[TrendingTv], Error>) -> Void ) {
-        guard let url = URL(string: "\(Constants.baseUrl)/3/tv/popular?api_key=\(Constants.apiKey)") else { return }
+        guard let url = URL(string: "\(Constants.baseUrl)/3/tv/airing_today?api_key=\(Constants.apiKey)&language=en-US&page=1") else { return }
         let task = URLSession.shared.dataTask(with: url) { data, _, error in
             guard let data = data, error == nil else {
                 completion(.failure(error ?? ApiError.failedToGetData))
@@ -179,4 +179,22 @@ class NetworkService {
         task.resume()
     }
     
+    //https://api.themoviedb.org/3/tv/top_rated?api_key=53bb76834e431dda9c6ac64c32ec35a5&language=en-US&page=1
+    // fetch top rated tv
+    func getTopRatedTv(completion: @escaping (Result<[TrendingTv], Error>) -> Void ) {
+        guard let url = URL(string: "\(Constants.baseUrl)/3/tv/top_rated?api_key=\(Constants.apiKey)&language=en-US&page=1") else { return }
+        let task = URLSession.shared.dataTask(with: url) { data, _, error in
+            guard let data = data, error == nil else {
+                completion(.failure(error ?? ApiError.failedToGetData))
+                return
+            }
+            do {
+                let result = try JSONDecoder().decode(TrendingTvResponse.self, from: data)
+                completion(.success(result.results))
+            } catch {
+                print(error)
+            }
+        }
+        task.resume()
+    }
 }

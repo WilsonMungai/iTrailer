@@ -32,7 +32,15 @@ class DetailPreviewViewController: UIViewController {
             trailerView.topAnchor.constraint(equalTo: view.topAnchor, constant: 8),
             trailerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
             trailerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
+            trailerView.heightAnchor.constraint(equalToConstant: view.frame.size.height/2)
         ])
+    }
+    
+    public func configure(with model: PreviewViewModel) {
+        guard let url = URL(string: "https://www.youtube.com/embed/\(model.youtubeView.id.videoId)") else {
+            return
+        }
+        trailerView.load(URLRequest(url: url))
     }
     
 }

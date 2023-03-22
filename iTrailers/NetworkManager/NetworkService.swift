@@ -198,7 +198,25 @@ class NetworkService {
         task.resume()
     }
     
-    func getTrailer() {
-        
+    // https://youtube.googleapis.com/youtube/v3/search?q=Harry%20&key=[YOUR_API_KEY] HTTP/1.1
+    func getTrailer(with query: String, completion: @escaping (Result<VideoElement, Error>) -> Void) {
+        // replace white space adding Percent Encoding
+        guard let query = query.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else {return}
+        // url string
+        guard let url = URL(string: "\(Constants.YoutubeBaseUrl)q=\(query)&key=\(Constants.YoutubeAPIKey)") else { return }
+        // url session
+        let task = URLSession.shared.dataTask(with: url) { data, _ , error in
+            guard let data = data, error == nil else { return }
+            do {
+                let result = try JSONDecoder().decode(YoutubeSearchResponse.self, from: data)
+                // access the items but return the firs index which is the best result
+                completion(.success(result.items[0]))
+                print(result)
+            }
+            catch {
+                print(error)
+            }
+        }
+        task.resume()
     }
 }

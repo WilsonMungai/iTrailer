@@ -7,14 +7,19 @@
 
 import UIKit
 
+protocol CollectionViewTableViewCellDelegate: AnyObject {
+    func collectionViewTableViewCellDidTapCell(_ cell: MovieCollectionView, viewModel: PreviewViewModel)
+}
+
 // Responsible for showing the video posters collection view
 class MovieCollectionView: UITableViewCell {
     
     // cell identifier
     static let cellIdentifier = "PosterCollectionView"
     
-    private var moviePoster: [Movie] = [Movie]()
+    weak var delegate: CollectionViewTableViewCellDelegate?
     
+    private var moviePoster: [Movie] = [Movie]()
     
     // MARK: - UI elements
     // collection view
@@ -83,6 +88,23 @@ extension MovieCollectionView: UICollectionViewDelegate, UICollectionViewDataSou
         guard let tendingPoster = moviePoster[indexPath.row].posterPath else { return UICollectionViewCell() }
         cell.configure(with: TrendingViewModel(trendingPosterUrl: tendingPoster, trendingPosterName: posterTitle))
         return cell
-        
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        // deselect the item selected
+        collectionView.deselectItem(at: indexPath, animated: true)
+        let movie = moviePoster[indexPath.row]
+        guard let movieName = movie.originalTitle ?? movie.title else { return }
+        NetworkService.shared.getTrailer(with: movieName + " trailer") { [weak self] result in
+            switch result {
+            case .success(let videoElement):
+//                let movie = self?.moviePoster[indexPath.row]
+                guard let strongSelf = self else { return }
+                let viewModel = PreviewViewModel(youtubeView: videoElement)
+                self?.delegate?.collectionViewTableViewCellDidTapCell(strongSelf, viewModel: viewModel)
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
 }

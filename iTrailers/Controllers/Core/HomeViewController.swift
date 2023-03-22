@@ -114,6 +114,15 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
                     print(error.localizedDescription)
                 }
             }
+        case TableSections.Upcoming.rawValue:
+            NetworkService.shared.getUpcomingMovies { result in
+                switch result {
+                case .success(let movie):
+                    cell.configure(with: movie)
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
         case TableSections.TopRated.rawValue:
             NetworkService.shared.getTopRatedMovies { result in
                 switch result {
@@ -123,6 +132,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
                     print(error.localizedDescription)
                 }
             }
+            
 //        case HomeTableSections.TrendingTv.rawValue:
 //            NetworkService.shared.getTrendingTv { result in
 //                switch result {

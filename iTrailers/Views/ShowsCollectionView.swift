@@ -11,6 +11,8 @@ import UIKit
 class ShowsCollectionView: UITableViewCell {
     private var trendingTv: [TrendingTv] = [TrendingTv]()
     
+    static let cellIdentifier = "ShowsCollectionView"
+    
     // collection view
     let trendingTvCollectionView: UICollectionView = {
         // setup collection view layout
@@ -40,8 +42,8 @@ class ShowsCollectionView: UITableViewCell {
     }
     
     private func trendingTvCollectionViewSetup() {
-//        trendingTvCollectionView.delegate = self
-//        trendingTvCollectionView.dataSource = self
+        trendingTvCollectionView.delegate = self
+        trendingTvCollectionView.dataSource = self
     }
     
     // Set up frame
@@ -55,5 +57,18 @@ class ShowsCollectionView: UITableViewCell {
         DispatchQueue.main.async { [weak self] in
             self?.trendingTvCollectionView.reloadData()
         }
+    }
+}
+
+extension ShowsCollectionView: UICollectionViewDelegate, UICollectionViewDataSource {
+    // number of shows returned per section
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 10
+    }
+    
+    // data displayed in the cell
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PosterCollectionViewCell.cellIdentifier, for: indexPath)
+        return cell
     }
 }

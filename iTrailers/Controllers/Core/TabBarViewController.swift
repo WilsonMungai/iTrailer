@@ -18,7 +18,7 @@ class TabBarViewController: UITabBarController {
     // MARK: - Tab Setup
     private func setUpTabs() {
         let homeVC = HomeViewController()
-        let trendingVC = TrendingViewController()
+        let trendingVC = ShowsViewController()
         let searchVC = SearchViewController()
         let downloadVC = DownloadViewController()
         

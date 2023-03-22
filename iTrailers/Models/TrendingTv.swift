@@ -10,7 +10,6 @@
 //https://api.themoviedb.org/3/tv/top_rated?api_key=53bb76834e431dda9c6ac64c32ec35a5&language=en-US&page=1
 //https://api.themoviedb.org/3/tv/popular?api_key=53bb76834e431dda9c6ac64c32ec35a5&language=en-US&page=1
 
-
 import Foundation
 
 struct TrendingTvResponse: Codable {

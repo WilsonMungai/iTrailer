@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C802B4A429CCA068005C1B0E /* Padding.swift in Sources */ = {isa = PBXBuildFile; fileRef = C802B4A329CCA068005C1B0E /* Padding.swift */; };
 		C80DA5A729CB7081007F592C /* DetailPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80DA5A629CB7081007F592C /* DetailPreviewViewController.swift */; };
 		C80DA5A929CB7528007F592C /* TrailerVideoResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80DA5A829CB7528007F592C /* TrailerVideoResponse.swift */; };
 		C80DA5AB29CB7EFF007F592C /* PreviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80DA5AA29CB7EFF007F592C /* PreviewViewModel.swift */; };
@@ -38,6 +39,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C802B4A329CCA068005C1B0E /* Padding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Padding.swift; sourceTree = "<group>"; };
 		C80DA5A629CB7081007F592C /* DetailPreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPreviewViewController.swift; sourceTree = "<group>"; };
 		C80DA5A829CB7528007F592C /* TrailerVideoResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrailerVideoResponse.swift; sourceTree = "<group>"; };
 		C80DA5AA29CB7EFF007F592C /* PreviewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewViewModel.swift; sourceTree = "<group>"; };
@@ -223,6 +225,7 @@
 			isa = PBXGroup;
 			children = (
 				C8FC9D9C29C4C56500B9DC6E /* Extensions.swift */,
+				C802B4A329CCA068005C1B0E /* Padding.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -305,6 +308,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C80DA5A729CB7081007F592C /* DetailPreviewViewController.swift in Sources */,
+				C802B4A429CCA068005C1B0E /* Padding.swift in Sources */,
 				C8FC9DA229C5169200B9DC6E /* PosterTableViewCell.swift in Sources */,
 				C80DA5A929CB7528007F592C /* TrailerVideoResponse.swift in Sources */,
 				C8FC9D9F29C4DE9500B9DC6E /* PosterCollectionViewCell.swift in Sources */,

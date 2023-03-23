@@ -82,7 +82,7 @@ class PosterCollectionViewCell: UICollectionViewCell {
             posterLabel.topAnchor.constraint(equalTo: posterImage.bottomAnchor),
             posterLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
             posterLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
-            posterLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            posterLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -4),
             posterLabel.heightAnchor.constraint(equalToConstant: 35),
         ])
     }

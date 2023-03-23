@@ -11,6 +11,11 @@ import WebKit
 class DetailPreviewViewController: UIViewController {
     
     // MARK: - UI Elements
+    let scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        return scrollView
+    }()
+    
     // movie trailer web content
     private let trailerView: WKWebView = {
         let webView = WKWebView()
@@ -22,19 +27,18 @@ class DetailPreviewViewController: UIViewController {
     private let ratingLabel: PaddingLabel = {
         let label = PaddingLabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .systemFont(ofSize: 16, weight: .semibold)
+        label.font = .systemFont(ofSize: 20, weight: .semibold)
         label.text = "8.4/10"
         label.textColor = .secondaryLabel
         // border
         label.layer.borderWidth = 0.5
         label.layer.borderColor = UIColor.darkGray.cgColor
-//        label.layer.masksToBounds = true
+        label.layer.masksToBounds = true
         label.paddingLeft = 5
         label.paddingRight = 5
         label.paddingTop = 5
         label.paddingBottom = 5
         label.layer.cornerRadius = 5
-//        label.sectionInset = UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10)
         label.numberOfLines = 0
         return label
     }()
@@ -53,7 +57,7 @@ class DetailPreviewViewController: UIViewController {
     private let movieNameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .systemFont(ofSize: 20, weight: .bold)
+        label.font = .systemFont(ofSize: 22, weight: .bold)
         label.text = "John Wick"
         label.textColor = .label
         label.numberOfLines = 0
@@ -64,7 +68,7 @@ class DetailPreviewViewController: UIViewController {
     private let releaseDateLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .systemFont(ofSize: 20, weight: .bold)
+        label.font = .systemFont(ofSize: 16, weight: .bold)
         label.text = "Release: 31 August 2022"
         label.textColor = .secondaryLabel
         label.numberOfLines = 0
@@ -75,7 +79,7 @@ class DetailPreviewViewController: UIViewController {
     private let movieLanguageLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .systemFont(ofSize: 20, weight: .bold)
+        label.font = .systemFont(ofSize: 18, weight: .bold)
         label.text = "Language: En"
         label.textColor = .secondaryLabel
         label.numberOfLines = 0
@@ -86,7 +90,7 @@ class DetailPreviewViewController: UIViewController {
     private let movieOverviewLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .systemFont(ofSize: 20, weight: .bold)
+        label.font = .systemFont(ofSize: 16, weight: .bold)
         label.text = "This movie was produced in 2023 and is expected to be one of the best movies ou here. This movie was produced in 2023 and is expected to be one of the best movies ou here."
         label.textColor = .secondaryLabel
         label.numberOfLines = 0
@@ -113,18 +117,19 @@ class DetailPreviewViewController: UIViewController {
     // MARK: - Layout constraints
     private func addConstraints() {
         NSLayoutConstraint.activate([
-//            trailerView.topAnchor.constraint(equalTo: view.topAnchor, constant: 8),
+            // trailer web view constraints
             trailerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
             trailerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
             trailerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             trailerView.heightAnchor.constraint(equalToConstant: view.frame.size.height/4),
             
+            // rating label constraints
             ratingLabel.topAnchor.constraint(equalTo: trailerView.bottomAnchor, constant: 8),
             ratingLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-//            ratingLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             ratingLabel.heightAnchor.constraint(equalToConstant: 50),
-            ratingLabel.widthAnchor.constraint(equalToConstant: 70),
+            ratingLabel.widthAnchor.constraint(equalToConstant: 78),
             
+            // movie image constraints
             movieImage.topAnchor.constraint(equalTo: trailerView.bottomAnchor, constant: 8),
             movieImage.centerYAnchor.constraint(equalTo: movieLanguageLabel.centerYAnchor),
             movieImage.heightAnchor.constraint(equalToConstant: 200),
@@ -132,39 +137,49 @@ class DetailPreviewViewController: UIViewController {
             movieImage.leadingAnchor.constraint(equalTo: releaseDateLabel.trailingAnchor),
             movieImage.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
             
+            // movie name label constraints
             movieNameLabel.topAnchor.constraint(equalTo: ratingLabel.bottomAnchor),
             movieNameLabel.leadingAnchor.constraint(equalTo: ratingLabel.leadingAnchor),
             movieNameLabel.trailingAnchor.constraint(equalTo: movieImage.leadingAnchor),
-//            movieNameLabel.heightAnchor.constraint(equalToConstant: 50),
+            movieNameLabel.heightAnchor.constraint(equalToConstant: 60),
             
+            // movie language label constaints
             movieLanguageLabel.topAnchor.constraint(equalTo: movieNameLabel.bottomAnchor),
             movieLanguageLabel.leadingAnchor.constraint(equalTo: ratingLabel.leadingAnchor),
             movieLanguageLabel.trailingAnchor.constraint(equalTo: movieNameLabel.trailingAnchor),
             
+            // movie released date label constaints
             releaseDateLabel.topAnchor.constraint(equalTo: movieLanguageLabel.bottomAnchor),
             releaseDateLabel.leadingAnchor.constraint(equalTo: ratingLabel.leadingAnchor),
             releaseDateLabel.trailingAnchor.constraint(equalTo: movieNameLabel.trailingAnchor),
-//            releaseDateLabel.heightAnchor.constraint(equalToConstant: 50),
             
-           
-            
-            movieOverviewLabel.topAnchor.constraint(equalTo: movieImage.bottomAnchor),
+            // movie overview label constaints
+            movieOverviewLabel.topAnchor.constraint(equalTo: movieImage.bottomAnchor, constant: 8),
             movieOverviewLabel.leadingAnchor.constraint(equalTo: ratingLabel.leadingAnchor),
             movieOverviewLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
         ])
     }
     
     // MARK: - Public method
-    public func configure(with model: PreviewViewModel) {
-        guard let url = URL(string: "https://www.youtube.com/embed/\(model.youtubeView.id.videoId)") else {
+    public func configure(with viewModel: PreviewViewModel) {
+        // url to fetch the trailer
+        guard let url = URL(string: "https://www.youtube.com/embed/\(viewModel.youtubeView.id.videoId)") else {
             return
         }
+        // hook up the web view to the url
         trailerView.load(URLRequest(url: url))
-        ratingLabel.text = String(model.movieRating)
-        movieNameLabel.text = model.movieName
-        movieOverviewLabel.text = model.movieOverView
-        releaseDateLabel.text = model.movieReleaseDate
-        
+        // rating label
+        ratingLabel.text = String(format: "%.1f", viewModel.movieRating) + " / 10"
+        // movie name label
+        movieNameLabel.text = viewModel.movieName
+        // move release date
+        releaseDateLabel.text = "Released: " + viewModel.movieReleaseDate
+        // movie overview
+        movieOverviewLabel.text = viewModel.movieOverView
+        // url to fetch poster image
+        guard let url = URL(string: "https://image.tmdb.org/t/p/w500/\(viewModel.moviePoster)") else { return }
+        // hook up image view to the url
+        movieImage.sd_setImage(with: url, completed: nil)
     }
     
 }

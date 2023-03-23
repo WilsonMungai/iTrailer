@@ -67,10 +67,12 @@ class MovieCollectionView: UITableViewCell {
     }
     
     // MARK: - Pulic methods
-    // configure
+    // function to configure the colletion view to the home view controller
     public func configure(with movie: [Movie]) {
+        // hook uo the movie
         moviePoster = movie
         DispatchQueue.main.async { [weak self] in
+            // reload the table view
             self?.movieCollectionView.reloadData()
         }
     }
@@ -82,14 +84,18 @@ extension MovieCollectionView: UICollectionViewDelegate, UICollectionViewDataSou
         return moviePoster.count
     }
     
+    // functionality to show movie data in the collection view
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PosterCollectionViewCell.cellIdentifier, for: indexPath) as? PosterCollectionViewCell else {return UICollectionViewCell()}
-        let posterTitle = moviePoster[indexPath.row].originalTitle ?? moviePoster[indexPath.row].title ?? ""
-        guard let tendingPoster = moviePoster[indexPath.row].posterPath else { return UICollectionViewCell() }
-        cell.configure(with: TrendingViewModel(trendingPosterUrl: tendingPoster, trendingPosterName: posterTitle))
+        // get the movie name
+        let movieTitle = moviePoster[indexPath.row].originalTitle ?? moviePoster[indexPath.row].title ?? ""
+        // get the movie poster
+        guard let moviePoster = moviePoster[indexPath.row].posterPath else { return UICollectionViewCell() }
+        cell.configure(with: TrendingViewModel(trendingPosterUrl: moviePoster, trendingPosterName: movieTitle))
         return cell
     }
     
+    // functionality when a movie is selected
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         // deselect the item selected
         collectionView.deselectItem(at: indexPath, animated: true)
@@ -97,21 +103,30 @@ extension MovieCollectionView: UICollectionViewDelegate, UICollectionViewDataSou
         guard let movieName = movie.originalTitle ?? movie.title else { return }
         NetworkService.shared.getTrailer(with: movieName + " trailer") { [weak self] result in
             switch result {
+                // show the movie details incase of success
             case .success(let videoElement):
-//                let movie = self?.moviePoster[indexPath.row]
+                // get the selected movie rating
                 let rating = self?.moviePoster[indexPath.row].voteAverage ?? 0
+                // get the selected movie name
                 let movieName = self?.moviePoster[indexPath.row].title ?? self?.moviePoster[indexPath.row].originalTitle ?? ""
+                // get the selected movie released date
                 let releaseDate = self?.moviePoster[indexPath.row].releaseDate ?? ""
-//                let language = self?.moviePoster[indexPath.row].originalLanguage
+                // get the selected movie poster
+                let moviePoster = self?.moviePoster[indexPath.row].posterPath ?? ""
+                // get the selected movie overview
                 let overview = self?.moviePoster[indexPath.row].overview ?? ""
                 guard let strongSelf = self else { return }
+                // hook up view model to the selected data
                 let viewModel = PreviewViewModel(youtubeView: videoElement,
                                                  movieRating: rating,
                                                  movieName: movieName,
                                                  movieReleaseDate: releaseDate,
-//                                                 movieLanguage: language,
+                                                 moviePoster: moviePoster,
                                                  movieOverView: overview)
+                // setup the delegate
                 self?.delegate?.collectionViewTableViewCellDidTapCell(strongSelf, viewModel: viewModel)
+                
+                // print error incase of failure
             case .failure(let error):
                 print(error)
             }

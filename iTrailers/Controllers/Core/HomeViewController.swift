@@ -78,20 +78,25 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     
     // number of sections in the table views
     func numberOfSections(in tableView: UITableView) -> Int {
+        // return count according to section titles we have
         return sectionTitle.count
     }
-    
+    // data to be return in each table row
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: MovieCollectionView.cellIdentifier, for: indexPath) as? MovieCollectionView else { return UITableViewCell() }
         
+        // setup delegate to the cell to be notified when a movie has been selected
         cell.delegate = self
         
+        // switch on the sections to return the appropriate data
         switch indexPath.section {
-            
+            // trending movie section
         case TableSections.Trending.rawValue:
+            // fetch the trending movies
             NetworkService.shared.getTrendingMovie { result in
                 switch result {
                 case .success(let movie):
+                    // when we get the trending movies we configure it to the cell
                     cell.configure(with: movie)
                 case .failure(let error):
                     print(error.localizedDescription)
@@ -102,6 +107,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             NetworkService.shared.getPopularMovies {  result in
                 switch result {
                 case .success(let movie):
+                    // when we get the popular movies we configure them to the cell
                     cell.configure(with: movie)
                 case .failure(let error):
                     print(error.localizedDescription)
@@ -111,32 +117,40 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             NetworkService.shared.getNowPlayingMovies { result in
                 switch result {
                 case .success(let movie):
+                    // when we get the now playing movies we configure them to the cell
                     cell.configure(with: movie)
                 case .failure(let error):
                     print(error.localizedDescription)
                 }
             }
-        case TableSections.Upcoming.rawValue:
-            NetworkService.shared.getUpcomingMovies { result in
-                switch result {
-                case .success(let movie):
-                    cell.configure(with: movie)
-                case .failure(let error):
-                    print(error.localizedDescription)
-                }
-            }
+            // top rated movies section
         case TableSections.TopRated.rawValue:
+            // fetch the top rated movies
             NetworkService.shared.getTopRatedMovies { result in
                 switch result {
                 case .success(let movie):
+                    // when we get the top rated movies we configure them to the cell
                     cell.configure(with: movie)
                 case .failure(let error):
                     print(error.localizedDescription)
                 }
             }
+            
+            // upcoming movies section
+        case TableSections.Upcoming.rawValue:
+            // fetch the upcoming movies
+            NetworkService.shared.getUpcomingMovies { result in
+                switch result {
+                case .success(let movie):
+                    // when we get the now upcoming movies we configure them to the cell
+                    cell.configure(with: movie)
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
+            
         default: return UITableViewCell()
         }
-        
         return cell
     }
     
@@ -155,6 +169,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         return 10
     }
     
+    // header title setup
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         guard let header = view as? UITableViewHeaderFooterView else { return }
         header.textLabel?.font = .systemFont(ofSize: 20, weight: .semibold)
@@ -176,10 +191,13 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
+// conform to the collection view delegate so as to get notified when a movie is selected and navigate to the movie detail view
 extension HomeViewController: CollectionViewTableViewCellDelegate {
+    // conform to the delegate function
     func collectionViewTableViewCellDidTapCell(_ cell: MovieCollectionView, viewModel: PreviewViewModel) {
         DispatchQueue.main.async { [weak self] in
             let vc = DetailPreviewViewController()
+            
             vc.configure(with: viewModel)
             self?.navigationController?.pushViewController(vc, animated: true)
         }

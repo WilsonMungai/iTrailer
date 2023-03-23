@@ -100,7 +100,7 @@ extension ShowsViewController: UITableViewDelegate, UITableViewDataSource {
                     print(error.localizedDescription)
                 }
             }
-        default: return UITableViewCell()
+        default: break
         }
         
         return cell

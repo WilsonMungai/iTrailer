@@ -134,7 +134,7 @@ class DetailPreviewViewController: UIViewController {
             
             movieNameLabel.topAnchor.constraint(equalTo: ratingLabel.bottomAnchor),
             movieNameLabel.leadingAnchor.constraint(equalTo: ratingLabel.leadingAnchor),
-            movieNameLabel.trailingAnchor.constraint(equalTo: movieNameLabel.trailingAnchor, constant: -16),
+            movieNameLabel.trailingAnchor.constraint(equalTo: movieImage.leadingAnchor),
 //            movieNameLabel.heightAnchor.constraint(equalToConstant: 50),
             
             movieLanguageLabel.topAnchor.constraint(equalTo: movieNameLabel.bottomAnchor),
@@ -160,6 +160,11 @@ class DetailPreviewViewController: UIViewController {
             return
         }
         trailerView.load(URLRequest(url: url))
+        ratingLabel.text = String(model.movieRating)
+        movieNameLabel.text = model.movieName
+        movieOverviewLabel.text = model.movieOverView
+        releaseDateLabel.text = model.movieReleaseDate
+        
     }
     
 }

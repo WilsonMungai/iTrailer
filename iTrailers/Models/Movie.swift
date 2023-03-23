@@ -23,7 +23,7 @@ struct Movie: Codable {
     let backdropPath: String?
     let id: Int?
     let title: String?
-    let originalLanguage: OriginalLanguage?
+    let originalLanguage: OriginalLanguage
     let originalTitle, overview, posterPath: String?
     let mediaType: String?
     let popularity: Double?

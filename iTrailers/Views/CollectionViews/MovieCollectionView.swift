@@ -99,8 +99,18 @@ extension MovieCollectionView: UICollectionViewDelegate, UICollectionViewDataSou
             switch result {
             case .success(let videoElement):
 //                let movie = self?.moviePoster[indexPath.row]
+                let rating = self?.moviePoster[indexPath.row].voteAverage ?? 0
+                let movieName = self?.moviePoster[indexPath.row].title ?? self?.moviePoster[indexPath.row].originalTitle ?? ""
+                let releaseDate = self?.moviePoster[indexPath.row].releaseDate ?? ""
+//                let language = self?.moviePoster[indexPath.row].originalLanguage
+                let overview = self?.moviePoster[indexPath.row].overview ?? ""
                 guard let strongSelf = self else { return }
-                let viewModel = PreviewViewModel(youtubeView: videoElement)
+                let viewModel = PreviewViewModel(youtubeView: videoElement,
+                                                 movieRating: rating,
+                                                 movieName: movieName,
+                                                 movieReleaseDate: releaseDate,
+//                                                 movieLanguage: language,
+                                                 movieOverView: overview)
                 self?.delegate?.collectionViewTableViewCellDidTapCell(strongSelf, viewModel: viewModel)
             case .failure(let error):
                 print(error)

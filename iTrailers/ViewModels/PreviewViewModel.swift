@@ -8,7 +8,10 @@
 import Foundation
 
 struct PreviewViewModel {
-//    let title: String
     let youtubeView: VideoElement
-//    let titleOverview: String
+    let movieRating: Double
+    let movieName: String
+    let movieReleaseDate: String
+//    let movieLanguage: OriginalLanguage
+    let movieOverView: String
 }

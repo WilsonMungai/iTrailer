@@ -8,10 +8,15 @@
 import UIKit
 
 class HomeViewController: UIViewController {
+
+    // list of section titles
+    let sectionTitle: [String] = ["Trending Movies", "Popular", "Now Playing", "Top Rated", "Upcoming Movies"]
     
+    // HeaderHeroImageView instance
     private var headerView: HeaderHeroImageView?
     
-    let sectionTitle: [String] = ["Trending Movies", "Popular", "Now Playing", "Top Rated", "Upcoming Movies"]
+    // Movie model
+    private var randomHeaderImage: Movie?
     
     //MARK: - UI elements
     private let homeTableView: UITableView = {
@@ -27,11 +32,13 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // add table view as subview
         view.addSubview(homeTableView)
         
         // table view setup
         tableViewSetup()
         
+        // view background color
         view.backgroundColor = .systemBackground
         
 //        NetworkService.shared.getTrendingTv { result in
@@ -48,23 +55,44 @@ class HomeViewController: UIViewController {
         super.viewDidLayoutSubviews()
         homeTableView.frame = view.bounds
     }
-    
+    override func viewDidAppear(_ animated: Bool) {
+        // generete random hero header image
+        configureHeroHeaderImage()
+    }
     // MARK: - Private methods
     // table view setup
     private func tableViewSetup() {
         
         homeTableView.delegate = self
         homeTableView.dataSource = self
+        
+        title = "Movies"
+        
         // ignore safe area
-        homeTableView.contentInsetAdjustmentBehavior = .never
+//        homeTableView.contentInsetAdjustmentBehavior = .never
         // header image
         headerView = HeaderHeroImageView(frame: CGRect(x: 0,
                                                        y: 0,
                                                        width: view.bounds.width,
                                                        height: view.bounds.height/2))
         // header view
-        homeTableView.tableHeaderView = headerView
-        
+//        homeTableView.tableHeaderView = headerView
+    }
+    // functionality to generate random header image
+    private func configureHeroHeaderImage() {
+        NetworkService.shared.getTrendingMovie { [weak self] result in
+            switch result {
+            case .success(let movie):
+                // return a random movie image from the movie items returned
+                let generateImage = movie.randomElement()
+                self?.randomHeaderImage = generateImage
+                self?.headerView?.configure(with: TrendingViewModel(
+                    trendingPosterUrl: generateImage?.posterPath ?? "",
+                    trendingPosterName: generateImage?.originalTitle ?? generateImage?.title ?? ""))
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
     }
 }
 

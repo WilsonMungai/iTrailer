@@ -17,7 +17,7 @@ class ShowsViewController: UIViewController {
     
     // MARK: - UI component
     let trendingTableView: UITableView = {
-        let tableView = UITableView(frame: .zero, style: .plain)
+        let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.register(ShowsCollectionView.self, forCellReuseIdentifier: ShowsCollectionView.cellIdentifier)
         tableView.separatorColor = UIColor.clear
         tableView.showsVerticalScrollIndicator = false
@@ -53,7 +53,7 @@ extension ShowsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
-
+    
     // number of sections in the table views
     func numberOfSections(in tableView: UITableView) -> Int {
         return sectionTitle.count
@@ -119,9 +119,9 @@ extension ShowsViewController: UITableViewDelegate, UITableViewDataSource {
         return sectionTitle[section]
     }
     
-    // header height of title section
+    // height of header section
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 10
+        return 35
     }
     
     // header title setup
@@ -136,9 +136,13 @@ extension ShowsViewController: UITableViewDelegate, UITableViewDataSource {
         header.textLabel?.textColor = .label
     }
     
-    // when cell is selected
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
+    // tells the delegate when the user scrolls
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        // offset of the top inset of the screen
+        let defaultOffSet = view.safeAreaInsets.top
+        let offset = scrollView.contentOffset.y + defaultOffSet
+        // when the user scrolls the naviagtion bar moves up
+        navigationController?.navigationBar.transform = .init(translationX: 0, y: min(0, -offset))
     }
 }
 

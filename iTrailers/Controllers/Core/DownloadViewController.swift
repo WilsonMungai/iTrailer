@@ -57,4 +57,13 @@ extension DownloadViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
     }
+    
+    // tells the delegate when the user scrolls
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        // offset of the top inset of the screen
+        let defaultOffSet = view.safeAreaInsets.top
+        let offset = scrollView.contentOffset.y + defaultOffSet
+        // when the user scrolls the naviagtion bar moves up
+        navigationController?.navigationBar.transform = .init(translationX: 0, y: min(0, -offset))
+    }
 }

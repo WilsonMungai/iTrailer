@@ -97,6 +97,21 @@ class DetailPreviewViewController: UIViewController {
         label.numberOfLines = 0
         return label
     }()
+    
+    private let addToFavourite: UIButton = {
+        var filled = UIButton.Configuration.plain()
+        filled.title = "Download"
+        filled.buttonSize = .large
+        filled.subtitle = ""
+        filled.image = UIImage(systemName: "arrow.down.square")
+        filled.imagePlacement = .trailing
+        filled.imagePadding = 5
+        
+        let button = UIButton(configuration: filled, primaryAction: nil)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.tintColor = .darkGray
+        return button
+    }()
 
     // MARK: - Lifecycle Methods
     override func viewDidLoad() {
@@ -105,6 +120,7 @@ class DetailPreviewViewController: UIViewController {
         // add subviews
         view.addSubviews(trailerView,
                          ratingLabel,
+                         addToFavourite,
                          movieImage,
                          movieNameLabel,
                          releaseDateLabel,
@@ -129,6 +145,12 @@ class DetailPreviewViewController: UIViewController {
             ratingLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             ratingLabel.heightAnchor.constraint(equalToConstant: 50),
             ratingLabel.widthAnchor.constraint(equalToConstant: 80),
+            
+            addToFavourite.leadingAnchor.constraint(equalTo: ratingLabel.trailingAnchor),
+            addToFavourite.centerYAnchor.constraint(equalTo: ratingLabel.centerYAnchor),
+            addToFavourite.heightAnchor.constraint(equalToConstant: 50),
+            addToFavourite.widthAnchor.constraint(equalToConstant: 150),
+            
             
             // movie image constraints
             movieImage.topAnchor.constraint(equalTo: trailerView.bottomAnchor, constant: 8),

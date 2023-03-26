@@ -26,6 +26,7 @@ class PosterTableViewCell: UITableViewCell {
         return image
     }()
     
+    // poster 1image container view
     private let imageContainer: UIView = {
         let containerView = UIView()
         containerView.translatesAutoresizingMaskIntoConstraints = false
@@ -43,22 +44,45 @@ class PosterTableViewCell: UITableViewCell {
     // poster label
     private let posterLabel: UILabel = {
         let label = UILabel()
-        label.text = "This is a placeholder for poster name"
+        label.text = "Movie Name"
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .label
+        label.font = .systemFont(ofSize: 24, weight: .bold)
         return label
     }()
     
-    private let playButton: UIButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        let image = (UIImage(systemName: "play.circle",
-                             withConfiguration: UIImage.SymbolConfiguration(pointSize: 40)))
-        button.setImage(image , for: .normal)
-        button.tintColor = .secondaryLabel
-        return button
+    // poster rating
+    private let posterRating: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "7.5"
+        label.font = .systemFont(ofSize: 16, weight: .bold)
+        return label
     }()
+    
+    // star rating image
+    private let imageRating: UIImageView = {
+        let image = UIImageView()
+        image.translatesAutoresizingMaskIntoConstraints = false
+        image.image = UIImage(systemName: "star.fill")
+        image.contentMode = .scaleAspectFit
+        image.clipsToBounds = true
+        image.tintColor = UIColor(named: "gold")
+        return image
+    }()
+    
+    // release date
+    private let posterReleaseDate: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "March,26,2023"
+        label.textColor = .secondaryLabel
+        label.font = .systemFont(ofSize: 14, weight: .semibold)
+        return label
+    }()
+    
+
 
     // MARK: - initializer
     // initialize table view cell
@@ -67,7 +91,9 @@ class PosterTableViewCell: UITableViewCell {
         imageContainer.addSubview(posterImage)
         contentView.addSubviews(imageContainer,
                                 posterLabel,
-                                playButton)
+                                posterRating,
+                                imageRating,
+                                posterReleaseDate)
         addConstraint()
     }
     
@@ -92,8 +118,21 @@ class PosterTableViewCell: UITableViewCell {
             posterLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
 //            posterLabel.heightAnchor.constraint(equalToConstant: 50),
             
-            playButton.trailingAnchor.constraint(equalTo: posterLabel.trailingAnchor),
-            playButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
+            imageRating.leadingAnchor.constraint(equalTo: posterLabel.leadingAnchor),
+            imageRating.topAnchor.constraint(equalTo: posterLabel.bottomAnchor, constant: 8),
+            imageRating.heightAnchor.constraint(equalToConstant: 50),
+            imageRating.trailingAnchor.constraint(equalTo: posterRating.leadingAnchor),
+            
+//            posterRating.leadingAnchor.constraint(equalTo: posterLabel.leadingAnchor),
+            posterRating.centerYAnchor.constraint(equalTo: imageRating.centerYAnchor),
+            posterRating.leadingAnchor.constraint(equalTo: imageRating.trailingAnchor, constant: 8),
+            posterRating.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
+//            posterRating.heightAnchor.constraint(equalToConstant: 50),
+            
+            posterReleaseDate.leadingAnchor.constraint(equalTo: posterLabel.leadingAnchor),
+            posterReleaseDate.topAnchor.constraint(equalTo: imageRating.bottomAnchor, constant: 8),
+            posterReleaseDate.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
+//            posterReleaseDate.heightAnchor.constraint(equalToConstant: 50)
         ])
     }
     

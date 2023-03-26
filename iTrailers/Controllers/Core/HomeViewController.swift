@@ -19,8 +19,9 @@ class HomeViewController: UIViewController {
     private var randomHeaderImage: Movie?
     
     //MARK: - UI elements
+    // movies table view
     private let homeTableView: UITableView = {
-        let tableView = UITableView()
+        let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.register(MovieCollectionView.self,
                            forCellReuseIdentifier: MovieCollectionView.cellIdentifier)
         tableView.separatorColor = UIColor.clear
@@ -40,19 +41,11 @@ class HomeViewController: UIViewController {
         
         // view background color
         view.backgroundColor = .systemBackground
-        
-//        NetworkService.shared.getTrendingTv { result in
-//            switch result {
-//            case .success(let success):
-//                print(success)
-//            case .failure(let error):
-//                print(error.localizedDescription)
-//            }
-//        }
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        // layout the table view frame
         homeTableView.frame = view.bounds
     }
     override func viewDidAppear(_ animated: Bool) {
@@ -194,7 +187,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     
     // height of header section
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 10
+        return 35
     }
     
     // header title setup

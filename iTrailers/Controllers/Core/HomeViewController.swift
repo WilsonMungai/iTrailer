@@ -192,7 +192,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
 }
 
 // conform to the collection view delegate so as to get notified when a movie is selected and navigate to the movie detail view
-extension HomeViewController: CollectionViewTableViewCellDelegate {
+extension HomeViewController: MovieCollectionViewTableViewCellDelegate {
     // conform to the delegate function
     func collectionViewTableViewCellDidTapCell(_ cell: MovieCollectionView, viewModel: PreviewViewModel) {
         DispatchQueue.main.async { [weak self] in

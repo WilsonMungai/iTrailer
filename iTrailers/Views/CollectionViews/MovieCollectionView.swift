@@ -7,7 +7,8 @@
 
 import UIKit
 
-protocol CollectionViewTableViewCellDelegate: AnyObject {
+// protocol to keep track when a movie is tapped
+protocol MovieCollectionViewTableViewCellDelegate: AnyObject {
     func collectionViewTableViewCellDidTapCell(_ cell: MovieCollectionView, viewModel: PreviewViewModel)
 }
 
@@ -17,7 +18,7 @@ class MovieCollectionView: UITableViewCell {
     // cell identifier
     static let cellIdentifier = "PosterCollectionView"
     
-    weak var delegate: CollectionViewTableViewCellDelegate?
+    weak var delegate: MovieCollectionViewTableViewCellDelegate?
     
     private var moviePoster: [Movie] = [Movie]()
     
@@ -115,7 +116,6 @@ extension MovieCollectionView: UICollectionViewDelegate, UICollectionViewDataSou
                 let moviePoster = self?.moviePoster[indexPath.row].posterPath ?? ""
                 // get the selected movie overview
                 let overview = self?.moviePoster[indexPath.row].overview ?? ""
-                guard let strongSelf = self else { return }
                 // hook up view model to the selected data
                 let viewModel = PreviewViewModel(youtubeView: videoElement,
                                                  movieRating: rating,
@@ -123,6 +123,8 @@ extension MovieCollectionView: UICollectionViewDelegate, UICollectionViewDataSou
                                                  movieReleaseDate: releaseDate,
                                                  moviePoster: moviePoster,
                                                  movieOverView: overview)
+                // strong self
+                guard let strongSelf = self else { return }
                 // setup the delegate
                 self?.delegate?.collectionViewTableViewCellDidTapCell(strongSelf, viewModel: viewModel)
                 

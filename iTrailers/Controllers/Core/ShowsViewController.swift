@@ -63,6 +63,9 @@ extension ShowsViewController: UITableViewDelegate, UITableViewDataSource {
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: ShowsCollectionView.cellIdentifier, for: indexPath) as? ShowsCollectionView else { return UITableViewCell() }
         
+        // setup delegate to the cell to be notified when a movie has been selected
+        cell.delegate = self
+        
         switch indexPath.section {
         case TableSections.Trending.rawValue:
             NetworkService.shared.getTrendingTv { result in
@@ -137,4 +140,16 @@ extension ShowsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
     }
+}
+
+// did tap cell delegate
+extension ShowsViewController: ShowsCollectionViewTableViewCellDelegate {
+    func collectionViewTableViewCellDidTapCell(_ cell: ShowsCollectionView, viewModel: PreviewViewModel) {
+        DispatchQueue.main.async { [weak self] in
+            let vc = DetailPreviewViewController()
+            vc.configure(with: viewModel)
+            self?.navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+    
 }

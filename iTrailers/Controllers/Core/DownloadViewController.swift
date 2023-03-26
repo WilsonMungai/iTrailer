@@ -21,7 +21,7 @@ class DownloadViewController: UIViewController {
         super.viewDidLoad()
         view.addSubview(downloadTabelView)
         tabelViewSetup()
-        title = "Download"
+        title = "Favourite"
         view.backgroundColor = .systemBackground
     }
     

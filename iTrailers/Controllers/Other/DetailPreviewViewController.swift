@@ -27,9 +27,10 @@ class DetailPreviewViewController: UIViewController {
     private let ratingLabel: PaddingLabel = {
         let label = PaddingLabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .systemFont(ofSize: 20, weight: .semibold)
+        label.font = .systemFont(ofSize: 20, weight: .bold)
         label.text = "8.4/10"
         label.textColor = .secondaryLabel
+        label.clipsToBounds = true
         // border
         label.layer.borderWidth = 0.5
         label.layer.borderColor = UIColor.darkGray.cgColor
@@ -38,7 +39,7 @@ class DetailPreviewViewController: UIViewController {
         label.paddingRight = 5
         label.paddingTop = 5
         label.paddingBottom = 5
-        label.layer.cornerRadius = 5
+        label.layer.cornerRadius = 8
         label.numberOfLines = 0
         return label
     }()
@@ -127,7 +128,7 @@ class DetailPreviewViewController: UIViewController {
             ratingLabel.topAnchor.constraint(equalTo: trailerView.bottomAnchor, constant: 8),
             ratingLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             ratingLabel.heightAnchor.constraint(equalToConstant: 50),
-            ratingLabel.widthAnchor.constraint(equalToConstant: 78),
+            ratingLabel.widthAnchor.constraint(equalToConstant: 80),
             
             // movie image constraints
             movieImage.topAnchor.constraint(equalTo: trailerView.bottomAnchor, constant: 8),

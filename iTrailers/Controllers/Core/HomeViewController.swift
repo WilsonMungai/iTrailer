@@ -197,7 +197,6 @@ extension HomeViewController: CollectionViewTableViewCellDelegate {
     func collectionViewTableViewCellDidTapCell(_ cell: MovieCollectionView, viewModel: PreviewViewModel) {
         DispatchQueue.main.async { [weak self] in
             let vc = DetailPreviewViewController()
-            
             vc.configure(with: viewModel)
             self?.navigationController?.pushViewController(vc, animated: true)
         }

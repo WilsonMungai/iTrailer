@@ -18,12 +18,26 @@ class PosterTableViewCell: UITableViewCell {
         let image = UIImageView()
         image.image = UIImage(named: "header")
         image.translatesAutoresizingMaskIntoConstraints = false
-        image.dropShadow()
         image.contentMode = .scaleAspectFill
+        image.dropShadow()
         image.clipsToBounds = true
         image.layer.masksToBounds = true
         image.layer.cornerRadius = 20
         return image
+    }()
+    
+    private let imageContainer: UIView = {
+        let containerView = UIView()
+        containerView.translatesAutoresizingMaskIntoConstraints = false
+        containerView.clipsToBounds = false
+        containerView.layer.cornerRadius = 5
+        containerView.layer.shadowColor = UIColor.darkGray.cgColor
+        containerView.layer.shadowOffset = CGSize(width: -3.0, height: 3.0)
+//        containerView.layer.shadowOffset = CGSize.zero
+        containerView.layer.shadowRadius = 5
+        containerView.layer.shadowOpacity = 0.9
+//        containerView.layer.shadowPath = UIBezierPath(roundedRect: containerView.bounds, cornerRadius: 10).cgPath
+        return containerView
     }()
     
     // poster label
@@ -50,7 +64,8 @@ class PosterTableViewCell: UITableViewCell {
     // initialize table view cell
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        contentView.addSubviews(posterImage,
+        imageContainer.addSubview(posterImage)
+        contentView.addSubviews(imageContainer,
                                 posterLabel,
                                 playButton)
         addConstraint()
@@ -84,15 +99,4 @@ class PosterTableViewCell: UITableViewCell {
     
 }
 
-//import UIKit
-extension UIView {
-    func dropShadow() {
-        layer.cornerRadius = 10
-        layer.shadowColor = UIColor.label.cgColor
-        layer.shadowOffset = CGSize(width: -4, height: 4)
-        layer.shadowOpacity = 0.2
-        layer.shadowRadius = 2.0
-        layer.masksToBounds = false
-        layer.cornerRadius = 4.0
-    }
-}
+

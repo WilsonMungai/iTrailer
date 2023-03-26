@@ -46,12 +46,12 @@ class TabBarViewController: UITabBarController {
                                               selectedImage: UIImage(systemName: "flame.fill"))
         
         // search tab
-        navSearch.tabBarItem = UITabBarItem(title: "Search",
+        navSearch.tabBarItem = UITabBarItem(title: "Discover",
                                             image: UIImage(systemName: "magnifyingglass.circle"),
                                             selectedImage: UIImage(systemName: "magnifyingglass.circle.fill"))
         
         // download tab
-        navDownload.tabBarItem = UITabBarItem(title: "Download",
+        navDownload.tabBarItem = UITabBarItem(title: "Favourite",
                                               image: UIImage(systemName: "arrow.down.app"),
                                               selectedImage: UIImage(systemName: "arrow.down.app.fill"))
         

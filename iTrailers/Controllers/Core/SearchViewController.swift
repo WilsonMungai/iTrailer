@@ -33,7 +33,7 @@ class SearchViewController: UIViewController {
         
         view.addSubview(searchTabelView)
 
-        title = "Search"
+        title = "Discover"
         view.backgroundColor = .systemBackground
         
         // integrate the search controller onto our naivagation stack

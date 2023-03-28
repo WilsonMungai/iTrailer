@@ -42,6 +42,9 @@ class SearchViewController: UIViewController {
         // table view setup method
         tabelViewSetup()
         
+        // search controller setup
+        searchControllerSetup()
+        
         // API Caller
         fetchDiscoverMovies()
     }
@@ -57,8 +60,14 @@ class SearchViewController: UIViewController {
         searchTabelView.delegate = self
         searchTabelView.dataSource = self
         
+    }
+    
+    private func searchControllerSetup() {
         // integrate the search controller onto our naivagation stack
         navigationItem.searchController = searchController
+        // update when search is updated
+        searchController.searchResultsUpdater = self
+
     }
     
     // fetch the popular movies
@@ -117,4 +126,38 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         navigationController?.navigationBar.transform = .init(translationX: 0, y: min(0, -offset))
     }
 }
+
+extension SearchViewController: UISearchResultsUpdating, SearchResultsViewControllerDelegate {
+    func searchResultsViewControllerDidTapItem(_ viewModel: PreviewViewModel) {
+        DispatchQueue.main.async { [weak self] in
+            let vc = DetailPreviewViewController()
+            vc.configure(with: viewModel)
+            self?.navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+    
+    func updateSearchResults(for searchController: UISearchController) {
+        let searchBar = searchController.searchBar
+        guard let query = searchBar.text,
+              !query.trimmingCharacters(in: .whitespaces).isEmpty,
+              query.trimmingCharacters(in: .whitespaces).count >= 2,
+              let resultController = searchController.searchResultsController as? SearchResultViewController else { return }
+        
+        resultController.delegate = self
+        
+        NetworkService.shared.searchMovie(with: query) { result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let movie):
+                    resultController.movie = movie
+                    resultController.searchResultCollectionView.reloadData()
+                case .failure(let error):
+                    print(error)
+                }
+            }
+        }
+    }
+}
+
+
 

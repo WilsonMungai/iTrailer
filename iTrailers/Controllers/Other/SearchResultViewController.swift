@@ -7,8 +7,15 @@
 
 import UIKit
 
+protocol SearchResultsViewControllerDelegate: AnyObject {
+    func searchResultsViewControllerDidTapItem(_ viewModel: PreviewViewModel)
+}
+
 class SearchResultViewController: UIViewController {
     
+    public weak var delegate: SearchResultsViewControllerDelegate?
+    
+    var movie = [Movie]()
     
     public let searchResultCollectionView: UICollectionView = {
         // layout that arranges items in a grid view with optional header and footer for each section
@@ -38,7 +45,7 @@ class SearchResultViewController: UIViewController {
         searchResultCollectionView.dataSource = self
     }
     
-    // notify view views have been laid iut
+    // notify view subviews have been laid iut
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         searchResultCollectionView.frame = view.bounds
@@ -47,14 +54,52 @@ class SearchResultViewController: UIViewController {
 }
 
 extension SearchResultViewController: UICollectionViewDelegate, UICollectionViewDataSource  {
+    // return number of items
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return movie.count
     }
-    
+    // display search items
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PosterCollectionViewCell.cellIdentifier,
-                                                      for: indexPath)
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PosterCollectionViewCell.cellIdentifier,
+                                                            for: indexPath) as? PosterCollectionViewCell else { return UICollectionViewCell() }
+        // hook up cell to the view model
+        let poster = movie[indexPath.row]
+        let posterTitle = poster.originalTitle ?? poster.title ?? ""
+        let posterImage = poster.posterPath ?? ""
+        cell.configure(with: TrendingViewModel(trendingPosterUrl: posterImage,
+                                               trendingPosterName: posterTitle))
         return cell
+    }
+    // navigate to show movie trailer
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
+        let poster = movie[indexPath.row]
+        let posterTitle = poster.title ?? ""
+        NetworkService.shared.getTrailer(with: posterTitle) { [weak self] result in
+            switch result {
+            case .success(let videoElement):
+                // get the selected movie rating
+                let rating = self?.movie[indexPath.row].voteAverage ?? 0
+                // get the selected movie name
+                let movieName = self?.movie[indexPath.row].title ?? self?.movie[indexPath.row].originalTitle ?? ""
+                // get the selected movie released date
+                let releaseDate = self?.movie[indexPath.row].releaseDate ?? ""
+                // get the selected movie poster
+                let moviePoster = self?.movie[indexPath.row].posterPath ?? ""
+                // get the selected movie overview
+                let overview = self?.movie[indexPath.row].overview ?? ""
+                // hook up view model to the selected data
+                self?.delegate?.searchResultsViewControllerDidTapItem(PreviewViewModel(
+                    youtubeView: videoElement,
+                    movieRating: rating,
+                    movieName: movieName,
+                    movieReleaseDate: releaseDate,
+                    moviePoster: moviePoster,
+                    movieOverView: overview))
+            case.failure(let error):
+                print(error)
+            }
+        }
     }
     
     

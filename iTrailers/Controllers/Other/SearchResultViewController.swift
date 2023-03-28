@@ -9,6 +9,7 @@ import UIKit
 
 class SearchResultViewController: UIViewController {
     
+    
     public let searchResultCollectionView: UICollectionView = {
         // layout that arranges items in a grid view with optional header and footer for each section
         let layout = UICollectionViewFlowLayout()

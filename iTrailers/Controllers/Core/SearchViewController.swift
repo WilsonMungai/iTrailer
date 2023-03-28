@@ -9,6 +9,8 @@ import UIKit
 
 class SearchViewController: UIViewController {
   
+    private var moviePoster = [Movie]()
+    
     let searchTabelView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.register(PosterTableViewCell.self, forCellReuseIdentifier: PosterTableViewCell.cellIdentifier)
@@ -36,20 +38,42 @@ class SearchViewController: UIViewController {
         title = "Discover"
         view.backgroundColor = .systemBackground
         
-        // integrate the search controller onto our naivagation stack
-        navigationItem.searchController = searchController
-        
+       
+        // table view setup method
         tabelViewSetup()
+        
+        // API Caller
+        fetchDiscoverMovies()
     }
-    
+    // table view frame
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         searchTabelView.frame = view.bounds
     }
     
+    // MARK: - Private methods
+    // table view setup
     private func tabelViewSetup() {
         searchTabelView.delegate = self
         searchTabelView.dataSource = self
+        
+        // integrate the search controller onto our naivagation stack
+        navigationItem.searchController = searchController
+    }
+    
+    // fetch the popular movies
+    private func fetchDiscoverMovies() {
+        NetworkService.shared.getPopularMovies { [weak self] result in
+            switch result {
+            case .success(let movies):
+                self?.moviePoster = movies
+                DispatchQueue.main.async {
+                    self?.searchTabelView.reloadData()
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
 
 
@@ -57,19 +81,29 @@ class SearchViewController: UIViewController {
 
 // MARK: - Table view extension
 extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
+    // number of cells
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return moviePoster.count
     }
+    // hook up cell to view model to display the data
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: PosterTableViewCell.cellIdentifier, for: indexPath)
-//        cell.backgroundColor = .systemCyan
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: PosterTableViewCell.cellIdentifier, for: indexPath) as? PosterTableViewCell else { return UITableViewCell() }
+        let poster = moviePoster[indexPath.row]
+        let imagePoster = poster.posterPath ?? ""
+        let posterName = poster.title ?? poster.originalTitle ?? ""
+        let posterRating = poster.voteAverage ?? 0.0
+        let posterReleaseDate = poster.releaseDate ?? ""
+        cell.configure(with: DiscoverViewModel(posterImageUrl: imagePoster,
+                                                posterName: posterName,
+                                                posterRating: posterRating,
+                                                releasedDate: posterReleaseDate))
         return cell
     }
-    
+    // height of cells
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 220
     }
-    
+    // functionality when cell is selected
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
     }

@@ -197,6 +197,7 @@ class NetworkService {
     }
     
     // https://youtube.googleapis.com/youtube/v3/search?q=Harry%20&key=[YOUR_API_KEY] HTTP/1.1
+    // youtube api caller to display the trailers
     func getTrailer(with query: String, completion: @escaping (Result<VideoElement, Error>) -> Void) {
         // replace white space adding Percent Encoding
         guard let query = query.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else {return}
@@ -206,12 +207,32 @@ class NetworkService {
         let task = URLSession.shared.dataTask(with: url) { data, _ , error in
             guard let data = data, error == nil else { return }
             do {
+                // decode response
                 let result = try JSONDecoder().decode(YoutubeSearchResponse.self, from: data)
-                // access the items but return the firs index which is the best result
+                // access the items but return the firs index which is the best matching result
                 completion(.success(result.items[0]))
                 print(result)
             }
             catch {
+                print(error)
+            }
+        }
+        task.resume()
+    }
+    
+    //     https://api.themoviedb.org/3/search/movie?api_key=<<api_key>>&language=en-US&page=1&include_adult=false
+    // search for movies with the user query term
+    func searchMovie(with query: String, completion: @escaping (Result<[Movie], Error>) -> Void) {
+        // format query to return a new string
+        // replace white space adding Percent Encoding
+        guard let query = query.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else {return}
+        guard let url = URL(string: "\(Constants.baseUrl)/3/search/movie?api_key=\(Constants.apiKey)&query=\(query)") else { return }
+        let task = URLSession.shared.dataTask(with: url) { data, _, error in
+            guard let data = data, error == nil else { return }
+            do {
+                let result = try JSONDecoder().decode(MovieResult.self, from: data)
+                completion(.success(result.results))
+            } catch {
                 print(error)
             }
         }

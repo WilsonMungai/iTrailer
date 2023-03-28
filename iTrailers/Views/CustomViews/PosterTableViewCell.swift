@@ -19,7 +19,6 @@ class PosterTableViewCell: UITableViewCell {
         image.image = UIImage(named: "header")
         image.translatesAutoresizingMaskIntoConstraints = false
         image.contentMode = .scaleAspectFill
-        image.dropShadow()
         image.clipsToBounds = true
         image.layer.masksToBounds = true
         image.layer.cornerRadius = 20
@@ -134,6 +133,18 @@ class PosterTableViewCell: UITableViewCell {
             posterReleaseDate.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
 //            posterReleaseDate.heightAnchor.constraint(equalToConstant: 50)
         ])
+    }
+    
+    // MARK: - Public methods
+    public func configure(with viewModel: DiscoverViewModel) {
+        // hook up the poster label to the view model
+        posterLabel.text = viewModel.posterName
+        // hook up the poster rating to the view model
+        posterRating.text = String(format: "%.1f", viewModel.posterRating)
+        // hook up the poster release date to the view model
+        posterReleaseDate.text = viewModel.releasedDate
+        guard let url = URL(string: "https://image.tmdb.org/t/p/w500/\(viewModel.posterImageUrl)") else { return }
+        posterImage.sd_setImage(with: url, completed: nil)
     }
     
 }

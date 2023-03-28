@@ -106,6 +106,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                                                 posterName: posterName,
                                                 posterRating: posterRating,
                                                 releasedDate: posterReleaseDate))
+        cell.selectionStyle = .none
         return cell
     }
     // height of cells
@@ -115,6 +116,36 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     // functionality when cell is selected
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        let poster = moviePoster[indexPath.row]
+        let posterTitle = poster.title ?? poster.originalTitle ?? ""
+        NetworkService.shared.getTrailer(with: posterTitle) { [weak self] result in
+            switch result {
+            case .success(let videoElement):
+                // get the selected movie rating
+                let rating = self?.moviePoster[indexPath.row].voteAverage ?? 0
+                // get the selected movie name
+                let movieName = self?.moviePoster[indexPath.row].title ?? self?.moviePoster[indexPath.row].originalTitle ?? ""
+                // get the selected movie released date
+                let releaseDate = self?.moviePoster[indexPath.row].releaseDate ?? ""
+                // get the selected movie poster
+                let moviePoster = self?.moviePoster[indexPath.row].posterPath ?? ""
+                // get the selected movie overview
+                let overview = self?.moviePoster[indexPath.row].overview ?? ""
+                // hook up view model to the selected data
+                DispatchQueue.main.async {
+                    let vc = DetailPreviewViewController()
+                    vc.configure(with: PreviewViewModel(youtubeView: videoElement,
+                                                        movieRating: rating,
+                                                        movieName: movieName,
+                                                        movieReleaseDate: releaseDate,
+                                                        moviePoster: moviePoster,
+                                                        movieOverView: overview))
+                    self?.navigationController?.pushViewController(vc, animated: true)
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
     
     // tells the delegate when the user scrolls

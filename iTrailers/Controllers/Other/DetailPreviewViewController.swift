@@ -10,6 +10,8 @@ import WebKit
 
 class DetailPreviewViewController: UIViewController {
     
+    var movie: Movie?
+    
     // MARK: - UI Elements
     let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -128,9 +130,17 @@ class DetailPreviewViewController: UIViewController {
                          movieOverviewLabel)
         // add constraints
         addConstraints()
+        addToFavouriteButton()
     }
     
     // MARK: - Private Methods
+    // download action
+    private func addToFavouriteButton() {
+        addToFavourite.addTarget(self, action: #selector(addToFavouriteTapped), for: .touchUpInside)
+    }
+    @objc private func addToFavouriteTapped() {
+        print("download tapped")
+    }
     // MARK: - Layout constraints
     private func addConstraints() {
         NSLayoutConstraint.activate([

@@ -7,16 +7,22 @@
 
 import UIKit
 
+// protocol to keep track when search item result is tapped
 protocol SearchResultsViewControllerDelegate: AnyObject {
     func searchResultsViewControllerDidTapItem(_ viewModel: PreviewViewModel)
 }
 
+// responsible to show the search view controller
 class SearchResultViewController: UIViewController {
     
+    // delegate
     public weak var delegate: SearchResultsViewControllerDelegate?
     
+//    var movie = [Movie]()
     var movie = [Movie]()
     
+    // MARK: - UI Elements
+    // search view controller
     public let searchResultCollectionView: UICollectionView = {
         // layout that arranges items in a grid view with optional header and footer for each section
         let layout = UICollectionViewFlowLayout()
@@ -70,7 +76,7 @@ extension SearchResultViewController: UICollectionViewDelegate, UICollectionView
                                                trendingPosterName: posterTitle))
         return cell
     }
-    // navigate to show movie trailer
+    // navigate to show movie details
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
         let poster = movie[indexPath.row]

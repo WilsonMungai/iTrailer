@@ -9,6 +9,8 @@ import UIKit
 
 class DownloadViewController: UIViewController {
     
+    private var poster = [PosterItem]()
+    
     let downloadTabelView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.register(PosterTableViewCell.self, forCellReuseIdentifier: PosterTableViewCell.cellIdentifier)
@@ -23,6 +25,7 @@ class DownloadViewController: UIViewController {
         tabelViewSetup()
         title = "Favourite"
         view.backgroundColor = .systemBackground
+        fetchFavourites()
     }
     
     override func viewDidLayoutSubviews() {
@@ -35,18 +38,39 @@ class DownloadViewController: UIViewController {
         downloadTabelView.dataSource = self
     }
     
-    
+    private func fetchFavourites() {
+        print("here")
+        DataPersistenceManager.shared.fetchSavedData { [weak self] result in
+            switch result {
+            case .success(let posters):
+                self?.poster = posters
+                DispatchQueue.main.async {
+                    self?.downloadTabelView.reloadData()
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
 }
 
 
 // MARK: - Table view extension
 extension DownloadViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return poster.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: PosterTableViewCell.cellIdentifier, for: indexPath)
-//        cell.backgroundColor = .systemCyan
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: PosterTableViewCell.cellIdentifier, for: indexPath) as? PosterTableViewCell else {return UITableViewCell()}
+        let poster = poster[indexPath.row]
+        let imagePoster = poster.posterPath ?? ""
+        let posterName = poster.title ?? poster.originalTitle ?? ""
+        let posterRating = poster.voteAverage
+        let posterReleaseDate = poster.releaseDate ?? ""
+        cell.configure(with: DiscoverViewModel(posterImageUrl: imagePoster,
+                                               posterName: posterName,
+                                               posterRating: posterRating,
+                                               releasedDate: posterReleaseDate))
         return cell
     }
     

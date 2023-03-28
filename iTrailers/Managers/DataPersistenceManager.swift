@@ -43,4 +43,22 @@ class DataPersistenceManager {
             print(error)
         }
     }
+    
+    func fetchSavedData(completion: @escaping (Result<[PosterItem], Error>) -> Void) {
+        // instance of app delegate
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let context = appDelegate.persistentContainer.viewContext
+        // type of data being fetched
+        let request: NSFetchRequest<PosterItem>
+        // fetch request
+        request = PosterItem.fetchRequest()
+        
+        do {
+            // ask database to fetch the items
+            let movies = try context.fetch(request)
+            completion(.success(movies))
+        } catch {
+            print(error)
+        }
+    }
 }

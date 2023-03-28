@@ -100,7 +100,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         let poster = moviePoster[indexPath.row]
         let imagePoster = poster.posterPath ?? ""
         let posterName = poster.title ?? poster.originalTitle ?? ""
-        let posterRating = poster.voteAverage ?? 0.0
+        let posterRating = poster.voteAverage 
         let posterReleaseDate = poster.releaseDate ?? ""
         cell.configure(with: DiscoverViewModel(posterImageUrl: imagePoster,
                                                 posterName: posterName,

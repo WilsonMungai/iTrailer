@@ -61,4 +61,24 @@ class DataPersistenceManager {
             print(error)
         }
     }
+    
+    func deleteData(model: PosterItem, completion: @escaping (Result<Void, Error>)-> Void) {
+        
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+        
+        let context = appDelegate.persistentContainer.viewContext
+        
+        
+        context.delete(model)
+        
+        do {
+            try context.save()
+            completion(.success(()))
+        } catch {
+            print(error)
+        }
+        
+    }
 }

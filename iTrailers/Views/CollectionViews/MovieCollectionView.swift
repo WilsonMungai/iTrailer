@@ -82,8 +82,7 @@ class MovieCollectionView: UITableViewCell {
         DataPersistenceManager.shared.downloadPoster(model: moviePoster[indexPath.row]) { result in
             switch result {
             case .success():
-//                NotificationCenter.default.post(name: NSNotification.Name("downloaded"), object: nil)
-                print("downloaded to database")
+                NotificationCenter.default.post(name: NSNotification.Name("downloaded"), object: nil)
             case .failure(let error):
                 print(error.localizedDescription)
             }

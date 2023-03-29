@@ -10,7 +10,7 @@ import WebKit
 
 class DetailPreviewViewController: UIViewController {
     
-    var movie: Movie?
+    var moviePoster: Movie?
     
     // MARK: - UI Elements
     let scrollView: UIScrollView = {
@@ -139,7 +139,19 @@ class DetailPreviewViewController: UIViewController {
         addToFavourite.addTarget(self, action: #selector(addToFavouriteTapped), for: .touchUpInside)
     }
     @objc private func addToFavouriteTapped() {
-        print("download tapped")
+        guard let movie = moviePoster else { return }
+        favourite(movie: movie)
+    }
+    private func favourite(movie: Movie) {
+        print("here")
+        DataPersistenceManager.shared.downloadPoster(model: movie) { result in
+            switch result {
+            case .success():
+                print("saved to database")
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
     // MARK: - Layout constraints
     private func addConstraints() {

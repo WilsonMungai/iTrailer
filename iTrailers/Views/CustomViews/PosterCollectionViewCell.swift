@@ -24,13 +24,14 @@ class PosterCollectionViewCell: UICollectionViewCell {
         image.clipsToBounds = true
         image.layer.masksToBounds = true
         image.contentMode = .scaleAspectFill
+        image.layer.cornerRadius = 10
         image.image = UIImage(named: "header")
         return image
     }()
     // poster label
     private let posterLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 14, weight: .semibold)
+        label.font = UIFont(name:"Arial Rounded MT Bold", size: 14)
         label.textColor = .label
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Movie Name, Movie Name, Movie Name"

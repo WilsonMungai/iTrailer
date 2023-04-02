@@ -19,7 +19,7 @@ class SearchResultViewController: UIViewController {
     public weak var delegate: SearchResultsViewControllerDelegate?
     
 //    var movie = [Movie]()
-    var movie = [Movie]()
+    var movie = [Poster]()
     
     // MARK: - UI Elements
     // search view controller

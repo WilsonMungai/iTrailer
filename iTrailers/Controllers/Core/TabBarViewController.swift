@@ -64,6 +64,6 @@ class TabBarViewController: UITabBarController {
         setViewControllers([navHome, navTrending, navSearch, navDownload], animated: true)
         
         // change tint color
-        tabBar.tintColor = .label
+//        tabBar.tintColor = .label
     }
 }

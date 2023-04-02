@@ -10,11 +10,16 @@ import WebKit
 
 class DetailPreviewViewController: UIViewController {
     
-    var moviePoster: Movie?
+//    var moviePoster: Movie?
+    private var moviePoster: [Poster] = [Poster]()
     
     // MARK: - UI Elements
-    let scrollView: UIScrollView = {
+    // scroll view
+    private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+//         scroll view bounds should be set to be bigger than the screen to give room for scrolling
+        scrollView.alwaysBounceVertical = true
         return scrollView
     }()
     
@@ -119,8 +124,9 @@ class DetailPreviewViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
+        view.addSubview(scrollView)
         // add subviews
-        view.addSubviews(trailerView,
+        scrollView.addSubviews(trailerView,
                          ratingLabel,
                          addToFavourite,
                          movieImage,
@@ -139,27 +145,43 @@ class DetailPreviewViewController: UIViewController {
         addToFavourite.addTarget(self, action: #selector(addToFavouriteTapped), for: .touchUpInside)
     }
     @objc private func addToFavouriteTapped() {
-        guard let movie = moviePoster else { return }
-        favourite(movie: movie)
+//        let movie = moviePoster
+//        DataPersistenceManager.shared.downloadPoster(model: movie.) { result in
+//            switch result {
+//            case .success():
+//                print("saved to database")
+//            case .failure(let error):
+//                print(error)
+//            }
+//        }
     }
-    private func favourite(movie: Movie) {
-        print("here")
-        DataPersistenceManager.shared.downloadPoster(model: movie) { result in
-            switch result {
-            case .success():
-                print("saved to database")
-            case .failure(let error):
-                print(error)
-            }
-        }
-    }
+//    private func favourite(movie: Movie) {
+//        print("here")
+//        DataPersistenceManager.shared.downloadPoster(model: movie) { result in
+//            switch result {
+//            case .success():
+//                print("saved to database")
+//            case .failure(let error):
+//                print(error)
+//            }
+//        }
+//    }
     // MARK: - Layout constraints
     private func addConstraints() {
         NSLayoutConstraint.activate([
+            
+            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            scrollView.topAnchor.constraint(equalTo: view.topAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
             // trailer web view constraints
-            trailerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
-            trailerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
-            trailerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+//            trailerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
+//            trailerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
+//            trailerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            trailerView.topAnchor.constraint(equalTo: view.topAnchor, constant: 50),
+            trailerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            trailerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             trailerView.heightAnchor.constraint(equalToConstant: view.frame.size.height/4),
             
             // rating label constraints
@@ -178,7 +200,7 @@ class DetailPreviewViewController: UIViewController {
             movieImage.topAnchor.constraint(equalTo: trailerView.bottomAnchor, constant: 8),
             movieImage.centerYAnchor.constraint(equalTo: movieLanguageLabel.centerYAnchor),
             movieImage.heightAnchor.constraint(equalToConstant: 200),
-            movieImage.widthAnchor.constraint(equalToConstant: 150),
+            movieImage.widthAnchor.constraint(equalToConstant: view.frame.size.width/3),
             movieImage.leadingAnchor.constraint(equalTo: releaseDateLabel.trailingAnchor),
             movieImage.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
             

@@ -16,7 +16,7 @@ class HomeViewController: UIViewController {
     private var headerView: HeaderHeroImageView?
     
     // Movie model
-    private var randomHeaderImage: Movie?
+    private var randomHeaderImage: Poster?
     
     //MARK: - UI elements
     // movies table view
@@ -41,6 +41,7 @@ class HomeViewController: UIViewController {
         
         // view background color
         view.backgroundColor = .systemBackground
+
     }
     
     override func viewDidLayoutSubviews() {
@@ -60,6 +61,9 @@ class HomeViewController: UIViewController {
         homeTableView.dataSource = self
         
         title = "Movies"
+        
+        // title color
+        navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.systemIndigo]
         
         // ignore safe area
 //        homeTableView.contentInsetAdjustmentBehavior = .never
@@ -169,7 +173,6 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
                     print(error.localizedDescription)
                 }
             }
-            
         default: return UITableViewCell()
         }
         return cell
@@ -192,6 +195,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     
     // header title setup
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        tableView.backgroundColor = .clear
         guard let header = view as? UITableViewHeaderFooterView else { return }
         header.textLabel?.font = .systemFont(ofSize: 20, weight: .semibold)
         header.textLabel?.text = header.textLabel?.text?.capitalized

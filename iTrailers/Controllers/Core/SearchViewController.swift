@@ -9,7 +9,7 @@ import UIKit
 
 class SearchViewController: UIViewController {
   
-    private var moviePoster = [Movie]()
+    private var moviePoster = [Poster]()
     
     let searchTabelView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
@@ -34,8 +34,7 @@ class SearchViewController: UIViewController {
         super.viewDidLoad()
         
         view.addSubview(searchTabelView)
-
-        title = "Discover"
+        
         view.backgroundColor = .systemBackground
         
        
@@ -59,6 +58,10 @@ class SearchViewController: UIViewController {
     private func tabelViewSetup() {
         searchTabelView.delegate = self
         searchTabelView.dataSource = self
+        
+        title = "Discover"
+        // title color
+        navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.systemIndigo]
         
     }
     
@@ -109,9 +112,9 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         cell.selectionStyle = .none
         return cell
     }
-    // height of cells
+    // height of row
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 220
+        return 330
     }
     // functionality when cell is selected
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

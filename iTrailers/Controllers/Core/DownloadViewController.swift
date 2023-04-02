@@ -10,7 +10,7 @@ import UIKit
 class DownloadViewController: UIViewController {
     
     private var poster = [PosterItem]()
-    
+    // table view
     let downloadTabelView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.register(PosterTableViewCell.self, forCellReuseIdentifier: PosterTableViewCell.cellIdentifier)
@@ -21,26 +21,29 @@ class DownloadViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .systemBackground
         view.addSubview(downloadTabelView)
         tabelViewSetup()
-        title = "Favourite"
-        view.backgroundColor = .systemBackground
         fetchFavourites()
         NotificationCenter.default.addObserver(forName: NSNotification.Name("downloaded"), object: nil, queue: nil) { _ in
             self.fetchFavourites()
         }
     }
-    
+    // layout subviews
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         downloadTabelView.frame = view.bounds
     }
-    
+    // table view setup
     private func tabelViewSetup() {
         downloadTabelView.delegate = self
         downloadTabelView.dataSource = self
+        title = "Favourite"
+        // title color
+        navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.systemIndigo]
+        
     }
-    
+    // fetch favourites
     private func fetchFavourites() {
         print("here")
         DataPersistenceManager.shared.fetchSavedData { [weak self] result in
@@ -60,9 +63,11 @@ class DownloadViewController: UIViewController {
 
 // MARK: - Table view extension
 extension DownloadViewController: UITableViewDelegate, UITableViewDataSource {
+    // number of items saved
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return poster.count
     }
+    // cell data
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: PosterTableViewCell.cellIdentifier, for: indexPath) as? PosterTableViewCell else {return UITableViewCell()}
         let poster = poster[indexPath.row]
@@ -76,9 +81,10 @@ extension DownloadViewController: UITableViewDelegate, UITableViewDataSource {
                                                releasedDate: posterReleaseDate))
         return cell
     }
-    
+ 
+    // height of row
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 220
+        return 330
     }
     
     // tells the delegate when the user scrolls
@@ -93,7 +99,7 @@ extension DownloadViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         switch editingStyle {
         case .delete:
-            
+            // delete item
             DataPersistenceManager.shared.deleteData(model: poster[indexPath.row]) { [weak self] result in
                 switch result {
                 case .success():
@@ -101,7 +107,9 @@ extension DownloadViewController: UITableViewDelegate, UITableViewDataSource {
                 case .failure(let error):
                     print(error.localizedDescription)
                 }
+                // remove the deleted item
                 self?.poster.remove(at: indexPath.row)
+                // delete the row
                 tableView.deleteRows(at: [indexPath], with: .fade)
             }
         default:

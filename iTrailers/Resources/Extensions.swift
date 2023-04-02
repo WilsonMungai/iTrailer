@@ -11,7 +11,16 @@ import UIKit
 //Extension to modify apples default addSubView uiview
 extension UIView
 {
+    // add subview
     func addSubviews(_ views: UIView...)
+    {
+        views.forEach({
+            addSubview($0)
+        })
+    }
+    
+    // scroll view
+    func scrollview(_ views: UIView...)
     {
         views.forEach({
             addSubview($0)

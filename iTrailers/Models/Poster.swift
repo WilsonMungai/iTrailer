@@ -13,12 +13,12 @@
 import Foundation
 
 // MARK: - Welcome
-struct MovieResult: Codable {
-    let results: [Movie]
+struct PosterResult: Codable {
+    let results: [Poster]
 }
 
 // MARK: - Result
-struct Movie: Codable {
+struct Poster: Codable {
     let backdropPath: String?
     let id: Int
     let title: String?
@@ -29,6 +29,9 @@ struct Movie: Codable {
     let releaseDate: String?
     let voteAverage: Double
     let voteCount: Int
+    let name: String?
+    let originalName: String?
+    let firstAirDate: String?
 
     enum CodingKeys: String, CodingKey {
         case backdropPath = "backdrop_path"
@@ -42,9 +45,11 @@ struct Movie: Codable {
         case releaseDate = "release_date"
         case voteAverage = "vote_average"
         case voteCount = "vote_count"
+        case originalName = "original_name"
+        case name
+        case firstAirDate = "first_air_date"
     }
 }
-
 //enum MediaType: String, Codable {
 //    case movie = "movie"
 //}

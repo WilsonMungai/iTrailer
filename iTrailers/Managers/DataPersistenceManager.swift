@@ -13,7 +13,7 @@ class DataPersistenceManager {
     
     static let shared = DataPersistenceManager()
     
-    func downloadPoster(model: Movie, completion: @escaping (Result<Void, Error>) -> Void) {
+    func downloadPoster(model: Poster, completion: @escaping (Result<Void, Error>) -> Void) {
         // instance of app delegate
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         let context = appDelegate.persistentContainer.viewContext

@@ -17,7 +17,7 @@ class NetworkService {
     /// - Parameter completion: Gives data on success or an error
     /// - Result: represents either a success or a failure, including an associated value in each case.
     //https://api.themoviedb.org/3/trending/movie/day?api_key=53bb76834e431dda9c6ac64c32ec35a5
-    func getTrendingMovie(completion: @escaping (Result<[Movie], Error>)-> Void) {
+    func getTrendingMovie(completion: @escaping (Result<[Poster], Error>)-> Void) {
         // construct ult to fetch trending movues
         guard let url = URL(string: "\(Constants.baseUrl)/3/trending/movie/day?api_key=\(Constants.apiKey)") else {return }
         // create the url session task to fetch data from url
@@ -31,7 +31,7 @@ class NetworkService {
             // decode response
             do {
                 //                let result = try JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed)
-                let result = try JSONDecoder().decode(MovieResult.self, from: data)
+                let result = try JSONDecoder().decode(PosterResult.self, from: data)
                 completion(.success(result.results))
             } catch {
                 // incase there is an error, print the error
@@ -43,7 +43,7 @@ class NetworkService {
     
     // fetch popular movies
     //https://api.themoviedb.org/3/movie/popular?api_key=53bb76834e431dda9c6ac64c32ec35a5&language=en-US&page=1
-    func getPopularMovies(completion: @escaping (Result<[Movie], Error>) -> Void) {
+    func getPopularMovies(completion: @escaping (Result<[Poster], Error>) -> Void) {
         guard let url = URL(string: "\(Constants.baseUrl)/3/movie/popular?api_key=\(Constants.apiKey)&language=en-US&page=1") else {return}
         let task = URLSession.shared.dataTask(with: url) { data, _, error in
             guard let data = data, error == nil else {
@@ -51,7 +51,7 @@ class NetworkService {
                 return
             }
             do {
-                let result = try JSONDecoder().decode(MovieResult.self, from: data)
+                let result = try JSONDecoder().decode(PosterResult.self, from: data)
                 completion(.success(result.results))
             } catch {
                 print(error)
@@ -62,7 +62,7 @@ class NetworkService {
     
     // fetch now playing movies
     //https://api.themoviedb.org/3/movie/now_playing?api_key=53bb76834e431dda9c6ac64c32ec35a5&language=en-US&page=1
-    func getNowPlayingMovies(completion: @escaping (Result<[Movie], Error>) -> Void) {
+    func getNowPlayingMovies(completion: @escaping (Result<[Poster], Error>) -> Void) {
         guard let url = URL(string: "\(Constants.baseUrl)/3/movie/now_playing?api_key=\(Constants.apiKey)&language=en-US&page=1") else { return }
         let task = URLSession.shared.dataTask(with: url) { data, _, error in
             guard let data = data, error == nil else {
@@ -70,7 +70,7 @@ class NetworkService {
                 return
             }
             do {
-                let result = try JSONDecoder().decode(MovieResult.self, from: data)
+                let result = try JSONDecoder().decode(PosterResult.self, from: data)
                 completion(.success(result.results))
             } catch {
                 print(error)
@@ -81,7 +81,7 @@ class NetworkService {
     
     // fetch top rated movies
     //https://api.themoviedb.org/3/movie/top_rated?api_key=53bb76834e431dda9c6ac64c32ec35a5&language=en-US&page=1
-    func getTopRatedMovies(completion: @escaping (Result<[Movie], Error>) -> Void) {
+    func getTopRatedMovies(completion: @escaping (Result<[Poster], Error>) -> Void) {
         guard let url = URL(string: "\(Constants.baseUrl)/3/movie/top_rated?api_key=\(Constants.apiKey)&language=en-US&page=1") else {return}
         let task = URLSession.shared.dataTask(with: url) { data, _, error in
             guard let data = data, error == nil else {
@@ -89,7 +89,7 @@ class NetworkService {
                 return
             }
             do {
-                let result = try JSONDecoder().decode(MovieResult.self, from: data)
+                let result = try JSONDecoder().decode(PosterResult.self, from: data)
                 completion(.success(result.results))
             } catch {
                 print(error)
@@ -100,7 +100,7 @@ class NetworkService {
     
     // fetch upcoming movies
     //https://api.themoviedb.org/3/movie/upcoming?api_key=53bb76834e431dda9c6ac64c32ec35a5&language=en-US&page=1
-    func getUpcomingMovies(completion: @escaping (Result<[Movie], Error>) -> Void) {
+    func getUpcomingMovies(completion: @escaping (Result<[Poster], Error>) -> Void) {
         guard let url = URL(string: "\(Constants.baseUrl)/3/movie/upcoming?api_key=\(Constants.apiKey)&language=en-US&page=1") else { return }
         let task = URLSession.shared.dataTask(with: url) { data, _, error in
             guard let data = data, error == nil else {
@@ -108,7 +108,7 @@ class NetworkService {
                 return
             }
             do {
-                let result = try JSONDecoder().decode(MovieResult.self, from: data)
+                let result = try JSONDecoder().decode(PosterResult.self, from: data)
                 completion(.success(result.results))
             } catch {
                 print(error)
@@ -119,7 +119,7 @@ class NetworkService {
     
     // fetch trending tv
     //https://api.themoviedb.org/3/trending/tv/day?api_key=53bb76834e431dda9c6ac64c32ec35a5
-    func getTrendingTv(completion: @escaping (Result<[TrendingTv], Error>) -> Void) {
+    func getTrendingTv(completion: @escaping (Result<[Poster], Error>) -> Void) {
         guard let url = URL(string: "\(Constants.baseUrl)/3/trending/tv/day?api_key=\(Constants.apiKey)") else { return }
         let task = URLSession.shared.dataTask(with: url) { data, _, error in
             guard let data = data, error == nil else {
@@ -128,7 +128,7 @@ class NetworkService {
             }
             
             do {
-                let result = try JSONDecoder().decode(TrendingTvResponse.self, from: data)
+                let result = try JSONDecoder().decode(PosterResult.self, from: data)
                 completion(.success(result.results))
             } catch {
                 print(error)
@@ -139,7 +139,7 @@ class NetworkService {
     
     // fetch popular tv
     //https://api.themoviedb.org/3/tv/popular?api_key=53bb76834e431dda9c6ac64c32ec35a5&language=en-US&page=1
-    func getPopularTv(completion: @escaping (Result<[TrendingTv], Error>) -> Void ) {
+    func getPopularTv(completion: @escaping (Result<[Poster], Error>) -> Void ) {
         guard let url = URL(string: "\(Constants.baseUrl)/3/tv/popular?api_key=\(Constants.apiKey)&language=en-US&page=1") else { return }
         let task = URLSession.shared.dataTask(with: url) { data, _, error in
             guard let data = data, error == nil else {
@@ -148,7 +148,7 @@ class NetworkService {
             }
             
             do {
-                let result = try JSONDecoder().decode(TrendingTvResponse.self, from: data)
+                let result = try JSONDecoder().decode(PosterResult.self, from: data)
                 completion(.success(result.results))
             } catch {
                 print(error)
@@ -159,7 +159,7 @@ class NetworkService {
     
     // fetch airing today tv
     //https://api.themoviedb.org/3/tv/airing_today?api_key=53bb76834e431dda9c6ac64c32ec35a5&language=en-US&page=1
-    func getAiringTodayTv(completion: @escaping (Result<[TrendingTv], Error>) -> Void ) {
+    func getAiringTodayTv(completion: @escaping (Result<[Poster], Error>) -> Void ) {
         guard let url = URL(string: "\(Constants.baseUrl)/3/tv/airing_today?api_key=\(Constants.apiKey)&language=en-US&page=1") else { return }
         let task = URLSession.shared.dataTask(with: url) { data, _, error in
             guard let data = data, error == nil else {
@@ -168,7 +168,7 @@ class NetworkService {
             }
             
             do {
-                let result = try JSONDecoder().decode(TrendingTvResponse.self, from: data)
+                let result = try JSONDecoder().decode(PosterResult.self, from: data)
                 completion(.success(result.results))
             } catch {
                 print(error)
@@ -179,7 +179,7 @@ class NetworkService {
     
     //https://api.themoviedb.org/3/tv/top_rated?api_key=53bb76834e431dda9c6ac64c32ec35a5&language=en-US&page=1
     // fetch top rated tv
-    func getTopRatedTv(completion: @escaping (Result<[TrendingTv], Error>) -> Void ) {
+    func getTopRatedTv(completion: @escaping (Result<[Poster], Error>) -> Void ) {
         guard let url = URL(string: "\(Constants.baseUrl)/3/tv/top_rated?api_key=\(Constants.apiKey)&language=en-US&page=1") else { return }
         let task = URLSession.shared.dataTask(with: url) { data, _, error in
             guard let data = data, error == nil else {
@@ -187,7 +187,7 @@ class NetworkService {
                 return
             }
             do {
-                let result = try JSONDecoder().decode(TrendingTvResponse.self, from: data)
+                let result = try JSONDecoder().decode(PosterResult.self, from: data)
                 completion(.success(result.results))
             } catch {
                 print(error)
@@ -222,15 +222,15 @@ class NetworkService {
     
     //     https://api.themoviedb.org/3/search/movie?api_key=<<api_key>>&language=en-US&page=1&include_adult=false
     // search for movies with the user query term
-    func searchMovie(with query: String, completion: @escaping (Result<[Movie], Error>) -> Void) {
+    func searchMovie(with query: String, completion: @escaping (Result<[Poster], Error>) -> Void) {
         // format query to return a new string
         // replace white space adding Percent Encoding
         guard let query = query.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else {return}
-        guard let url = URL(string: "\(Constants.baseUrl)/3/search/movie?api_key=\(Constants.apiKey)&query=\(query)") else { return }
+        guard let url = URL(string: "\(Constants.baseUrl)/3/search/multi?api_key=\(Constants.apiKey)&query=\(query)") else { return }
         let task = URLSession.shared.dataTask(with: url) { data, _, error in
             guard let data = data, error == nil else { return }
             do {
-                let result = try JSONDecoder().decode(MovieResult.self, from: data)
+                let result = try JSONDecoder().decode(PosterResult.self, from: data)
                 completion(.success(result.results))
             } catch {
                 print(error)

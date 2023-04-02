@@ -20,7 +20,7 @@ class MovieCollectionView: UITableViewCell {
     
     weak var delegate: MovieCollectionViewTableViewCellDelegate?
     
-    private var moviePoster: [Movie] = [Movie]()
+    private var moviePoster: [Poster] = [Poster]()
     
     // MARK: - UI elements
     // collection view
@@ -69,7 +69,7 @@ class MovieCollectionView: UITableViewCell {
     
     // MARK: - Pulic methods
     // function to configure the colletion view to the home view controller
-    public func configure(with movie: [Movie]) {
+    public func configure(with movie: [Poster]) {
         // hook uo the movie
         moviePoster = movie
         DispatchQueue.main.async { [weak self] in
@@ -77,7 +77,7 @@ class MovieCollectionView: UITableViewCell {
             self?.movieCollectionView.reloadData()
         }
     }
-    
+    // save item to coredata
     private func downloadTitleAt(indexPath: IndexPath) {
         DataPersistenceManager.shared.downloadPoster(model: moviePoster[indexPath.row]) { result in
             switch result {
@@ -87,13 +87,12 @@ class MovieCollectionView: UITableViewCell {
                 print(error.localizedDescription)
             }
         }
-        
-
     }
 }
 
-// MARK: - Xxtension
+// MARK: - Extension
 extension MovieCollectionView: UICollectionViewDelegate, UICollectionViewDataSource {
+    // number of items
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return moviePoster.count
     }
@@ -147,8 +146,8 @@ extension MovieCollectionView: UICollectionViewDelegate, UICollectionViewDataSou
             }
         }
     }
+    
     func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-        
         let config = UIContextMenuConfiguration(
             identifier: nil,
             previewProvider: nil) {[weak self] _ in
@@ -157,7 +156,6 @@ extension MovieCollectionView: UICollectionViewDelegate, UICollectionViewDataSou
                 }
                 return UIMenu(title: "", image: nil, identifier: nil, options: .displayInline, children: [downloadAction])
             }
-        
         return config
     }
 }

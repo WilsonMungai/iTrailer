@@ -28,7 +28,6 @@ class ShowsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(trendingTableView)
-        title = "Tv Shows"
         view.backgroundColor = .systemBackground
         tabelViewSetup()
     }
@@ -42,6 +41,9 @@ class ShowsViewController: UIViewController {
     private func tabelViewSetup() {
         trendingTableView.delegate = self
         trendingTableView.dataSource = self
+        title = "Tv Shows"
+        // title color
+        navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.systemIndigo]
     }
     // MARK: - Public methods
 }
@@ -103,7 +105,8 @@ extension ShowsViewController: UITableViewDelegate, UITableViewDataSource {
                     print(error.localizedDescription)
                 }
             }
-        default: break
+        default: UITableViewCell()
+//        default: break
         }
         
         return cell
@@ -126,6 +129,7 @@ extension ShowsViewController: UITableViewDelegate, UITableViewDataSource {
     
     // header title setup
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        tableView.backgroundColor = .clear
         guard let header = view as? UITableViewHeaderFooterView else { return }
         header.textLabel?.font = .systemFont(ofSize: 20, weight: .semibold)
         header.textLabel?.text = header.textLabel?.text?.capitalized

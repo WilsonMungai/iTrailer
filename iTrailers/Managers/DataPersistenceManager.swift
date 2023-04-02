@@ -32,6 +32,9 @@ class DataPersistenceManager {
         item.mediaType = model.mediaType
         item.popularity = model.popularity
         item.voteCount = Int64(model.voteCount)
+        item.name = model.name
+        item.originalName = model.name
+        item.firstAirDate = model.firstAirDate
         
         do {
             // attempts to save the data

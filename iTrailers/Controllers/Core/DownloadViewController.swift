@@ -10,6 +10,7 @@ import UIKit
 class DownloadViewController: UIViewController {
     
     private var poster = [PosterItem]()
+    
     // table view
     let downloadTabelView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
@@ -72,17 +73,18 @@ extension DownloadViewController: UITableViewDelegate, UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: PosterTableViewCell.cellIdentifier, for: indexPath) as? PosterTableViewCell else {return UITableViewCell()}
         let poster = poster[indexPath.row]
         let imagePoster = poster.posterPath ?? ""
-        let posterName = poster.title ?? poster.originalTitle ?? ""
+        let posterName = poster.title ?? poster.originalTitle ?? poster.name ?? poster.originalName ?? ""
         let posterRating = poster.voteAverage
-        let posterReleaseDate = poster.releaseDate ?? ""
+        let posterReleaseDate = poster.releaseDate ?? poster.firstAirDate ?? ""
         cell.configure(with: DiscoverViewModel(posterImageUrl: imagePoster,
                                                posterName: posterName,
                                                posterRating: posterRating,
                                                releasedDate: posterReleaseDate))
+        cell.selectionStyle = .none
         return cell
     }
  
-    // height of row
+    // row height
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 330
     }
@@ -128,9 +130,9 @@ extension DownloadViewController: UITableViewDelegate, UITableViewDataSource {
                 // get the selected movie rating
                 let rating = self?.poster[indexPath.row].voteAverage ?? 0
                 // get the selected movie name
-                let movieName = self?.poster[indexPath.row].title ?? self?.poster[indexPath.row].originalTitle ?? ""
+                let movieName = self?.poster[indexPath.row].title ?? self?.poster[indexPath.row].originalTitle ?? self?.poster[indexPath.row].name ?? self?.poster[indexPath.row].originalName ?? ""
                 // get the selected movie released date
-                let releaseDate = self?.poster[indexPath.row].releaseDate ?? ""
+                let releaseDate = self?.poster[indexPath.row].releaseDate ?? self?.poster[indexPath.row].firstAirDate ?? ""
                 // get the selected movie poster
                 let moviePoster = self?.poster[indexPath.row].posterPath ?? ""
                 // get the selected movie overview

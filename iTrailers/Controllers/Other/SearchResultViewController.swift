@@ -70,7 +70,7 @@ extension SearchResultViewController: UICollectionViewDelegate, UICollectionView
                                                             for: indexPath) as? PosterCollectionViewCell else { return UICollectionViewCell() }
         // hook up cell to the view model
         let poster = movie[indexPath.row]
-        let posterTitle = poster.originalTitle ?? poster.title ?? ""
+        let posterTitle = poster.originalTitle ?? poster.title ?? poster.name ?? poster.originalName ?? ""
         let posterImage = poster.posterPath ?? ""
         cell.configure(with: TrendingViewModel(trendingPosterUrl: posterImage,
                                                trendingPosterName: posterTitle))
@@ -80,16 +80,18 @@ extension SearchResultViewController: UICollectionViewDelegate, UICollectionView
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
         let poster = movie[indexPath.row]
-        let posterTitle = poster.title ?? ""
+        // get movie or poster title
+        let posterTitle = poster.title ?? poster.originalTitle ?? poster.name ?? poster.originalName ?? ""
+        // search with the provided title
         NetworkService.shared.getTrailer(with: posterTitle) { [weak self] result in
             switch result {
             case .success(let videoElement):
                 // get the selected movie rating
                 let rating = self?.movie[indexPath.row].voteAverage ?? 0
                 // get the selected movie name
-                let movieName = self?.movie[indexPath.row].title ?? self?.movie[indexPath.row].originalTitle ?? ""
+                let movieName = self?.movie[indexPath.row].title ?? self?.movie[indexPath.row].originalTitle ?? self?.movie[indexPath.row].name ?? self?.movie[indexPath.row].originalName ?? ""
                 // get the selected movie released date
-                let releaseDate = self?.movie[indexPath.row].releaseDate ?? ""
+                let releaseDate = self?.movie[indexPath.row].releaseDate ?? self?.movie[indexPath.row].firstAirDate ?? ""
                 // get the selected movie poster
                 let moviePoster = self?.movie[indexPath.row].posterPath ?? ""
                 // get the selected movie overview

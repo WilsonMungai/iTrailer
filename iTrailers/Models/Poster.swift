@@ -22,7 +22,6 @@ struct Poster: Codable {
     let backdropPath: String?
     let id: Int
     let title: String?
-//    let originalLanguage: OriginalLanguage
     let originalTitle, overview, posterPath: String?
     let mediaType: String?
     let popularity: Double
@@ -50,19 +49,4 @@ struct Poster: Codable {
         case firstAirDate = "first_air_date"
     }
 }
-//enum MediaType: String, Codable {
-//    case movie = "movie"
-//}
-//
-//enum OriginalLanguage: String, Codable {
-//    case en = "en"
-//    case es = "es"
-//    case fr = "fr"
-//    case nl = "nl"
-//    case hi = "hi"
-//    case ja = "ja"
-//    case it = "it"
-//    case ko = "ko"
-//    case ru = "ru"
-//    case de = "de"
-//}
+

@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+// responsible for holding tv shows sections
 class ShowsViewController: UIViewController {
     
     // titles of header sections
@@ -69,6 +69,7 @@ extension ShowsViewController: UITableViewDelegate, UITableViewDataSource {
         cell.delegate = self
         
         switch indexPath.section {
+            // trending tv shows
         case TableSections.Trending.rawValue:
             NetworkService.shared.getTrendingTv { result in
                 switch result {
@@ -78,6 +79,7 @@ extension ShowsViewController: UITableViewDelegate, UITableViewDataSource {
                     print(error.localizedDescription)
                 }
             }
+            // popular tv shows
         case TableSections.Popular.rawValue:
             NetworkService.shared.getPopularTv { result in
                 switch result {
@@ -87,6 +89,7 @@ extension ShowsViewController: UITableViewDelegate, UITableViewDataSource {
                     print(error.localizedDescription)
                 }
             }
+            // now playing tv shows
         case TableSections.NowPlaying.rawValue:
             NetworkService.shared.getAiringTodayTv { result in
                 switch result {
@@ -96,6 +99,7 @@ extension ShowsViewController: UITableViewDelegate, UITableViewDataSource {
                     print(error.localizedDescription)
                 }
             }
+            // top rated shows
         case TableSections.TopRated.rawValue:
             NetworkService.shared.getAiringTodayTv { result in
                 switch result {
@@ -108,7 +112,6 @@ extension ShowsViewController: UITableViewDelegate, UITableViewDataSource {
 //        default: UITableViewCell()
         default: break
         }
-        
         return cell
     }
     

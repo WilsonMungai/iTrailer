@@ -17,28 +17,7 @@ struct Constants {
     // google dev api key
     static let YoutubeAPIKey = "AIzaSyAeOhT5SAS-H5UZtpjJHqJjiPh47J25fBI"
     
-//    static let YoutubeAPIKey = "AIzaSyDqX8axTGeNpXRiISTGL7Tya7fjKJDYi4g"
-    
-//    static let YoutubeAPIKey = "AIzaSyDqX8axTGeNpXRiISTGL7Tya7fjKJDYi4g"
-    
     // youtube base url
     static let YoutubeBaseUrl = "https://youtube.googleapis.com/youtube/v3/search?"
     
 }
-
-/*
- let adult: Bool
- let backdrop_path: String
- let id: Int
- let title: String
- let original_language: String
- let original_title: String
- let overview: String
- let poster_path: String
- let media_type: String
- let popularity: Double
- let release_date: String
- let video: Bool
- let vote_average: Double
- let vote_count: Int
- */

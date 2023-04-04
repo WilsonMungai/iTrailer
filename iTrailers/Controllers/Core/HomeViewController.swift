@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+// responsible for holding movies sections
 class HomeViewController: UIViewController {
 
     // list of section titles
@@ -49,10 +49,6 @@ class HomeViewController: UIViewController {
         // layout the table view frame
         homeTableView.frame = view.bounds
     }
-    override func viewDidAppear(_ animated: Bool) {
-        // generete random hero header image
-        configureHeroHeaderImage()
-    }
     // MARK: - Private methods
     // table view setup
     private func tableViewSetup() {
@@ -64,32 +60,6 @@ class HomeViewController: UIViewController {
         
         // title color
         navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.systemIndigo]
-        
-        // ignore safe area
-//        homeTableView.contentInsetAdjustmentBehavior = .never
-        // header image
-        headerView = HeaderHeroImageView(frame: CGRect(x: 0,
-                                                       y: 0,
-                                                       width: view.bounds.width,
-                                                       height: view.bounds.height/2))
-        // header view
-//        homeTableView.tableHeaderView = headerView
-    }
-    // functionality to generate random header image
-    private func configureHeroHeaderImage() {
-        NetworkService.shared.getTrendingMovie { [weak self] result in
-            switch result {
-            case .success(let movie):
-                // return a random movie image from the movie items returned
-                let generateImage = movie.randomElement()
-                self?.randomHeaderImage = generateImage
-                self?.headerView?.configure(with: TrendingViewModel(
-                    trendingPosterUrl: generateImage?.posterPath ?? "",
-                    trendingPosterName: generateImage?.originalTitle ?? generateImage?.title ?? ""))
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
-        }
     }
 }
 
@@ -127,7 +97,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
                     print(error.localizedDescription)
                 }
             }
-            
+            // popular movies section
         case TableSections.Popular.rawValue:
             NetworkService.shared.getPopularMovies {  result in
                 switch result {

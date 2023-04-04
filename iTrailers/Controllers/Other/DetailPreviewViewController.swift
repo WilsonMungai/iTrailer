@@ -8,6 +8,7 @@
 import UIKit
 import WebKit
 
+// responsible for movie/show detail preview
 class DetailPreviewViewController: UIViewController {
     
     //    var moviePoster: Movie?
@@ -18,7 +19,7 @@ class DetailPreviewViewController: UIViewController {
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
-        //         scroll view bounds should be set to be bigger than the screen to give room for scrolling
+        //   scroll view bounds should be set to be bigger than the screen to give room for scrolling
         scrollView.alwaysBounceVertical = true
         return scrollView
     }()
@@ -83,6 +84,17 @@ class DetailPreviewViewController: UIViewController {
         return label
     }()
     
+    // star rating image
+    private let calendarImage: UIImageView = {
+        let image = UIImageView()
+        image.translatesAutoresizingMaskIntoConstraints = false
+        image.image = UIImage(systemName: "calendar")
+        image.contentMode = .scaleAspectFit
+        image.clipsToBounds = true
+        image.tintColor = UIColor.systemIndigo
+        return image
+    }()
+    
     // release date
     private let movieLanguageLabel: UILabel = {
         let label = UILabel()
@@ -93,6 +105,7 @@ class DetailPreviewViewController: UIViewController {
         label.numberOfLines = 0
         return label
     }()
+    
     
     // movie over view
     private let movieOverviewLabel: UILabel = {
@@ -105,12 +118,13 @@ class DetailPreviewViewController: UIViewController {
         return label
     }()
     
+    // add favourite button
     private let addToFavourite: UIButton = {
         var filled = UIButton.Configuration.plain()
-        filled.title = "Download"
+        filled.title = "Favourite"
         filled.buttonSize = .large
         filled.subtitle = ""
-        filled.image = UIImage(systemName: "arrow.down.square")
+        filled.image = UIImage(systemName: "heart")
         filled.imagePlacement = .trailing
         filled.imagePadding = 5
         
@@ -134,7 +148,8 @@ class DetailPreviewViewController: UIViewController {
                                movieNameLabel,
                                releaseDateLabel,
                                movieLanguageLabel,
-                               movieOverviewLabel)
+                               movieOverviewLabel,
+                               calendarImage)
         // add constraints
         addConstraints()
         addToFavouriteButton()
@@ -146,40 +161,17 @@ class DetailPreviewViewController: UIViewController {
         addToFavourite.addTarget(self, action: #selector(addToFavouriteTapped), for: .touchUpInside)
     }
     @objc private func addToFavouriteTapped() {
-        //        let movie = moviePoster
-        //        DataPersistenceManager.shared.downloadPoster(model: movie.) { result in
-        //            switch result {
-        //            case .success():
-        //                print("saved to database")
-        //            case .failure(let error):
-        //                print(error)
-        //            }
-        //        }
     }
-    //    private func favourite(movie: Movie) {
-    //        print("here")
-    //        DataPersistenceManager.shared.downloadPoster(model: movie) { result in
-    //            switch result {
-    //            case .success():
-    //                print("saved to database")
-    //            case .failure(let error):
-    //                print(error)
-    //            }
-    //        }
-    //    }
     // MARK: - Layout constraints
     private func addConstraints() {
         NSLayoutConstraint.activate([
-            
+            // scroll view
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             scrollView.topAnchor.constraint(equalTo: view.topAnchor),
             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             
             // trailer web view constraints
-            //            trailerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
-            //            trailerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
-            //            trailerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             trailerView.topAnchor.constraint(equalTo: view.topAnchor, constant: 50),
             trailerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             trailerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
@@ -216,10 +208,12 @@ class DetailPreviewViewController: UIViewController {
             movieLanguageLabel.leadingAnchor.constraint(equalTo: ratingLabel.leadingAnchor),
             movieLanguageLabel.trailingAnchor.constraint(equalTo: movieNameLabel.trailingAnchor),
             
-            // movie released date label constaints
-            releaseDateLabel.topAnchor.constraint(equalTo: movieLanguageLabel.bottomAnchor),
-            releaseDateLabel.leadingAnchor.constraint(equalTo: ratingLabel.leadingAnchor),
-            releaseDateLabel.trailingAnchor.constraint(equalTo: movieNameLabel.trailingAnchor),
+            // movie released date label constaints,
+            releaseDateLabel.centerYAnchor.constraint(equalTo: calendarImage.centerYAnchor),
+            releaseDateLabel.leadingAnchor.constraint(equalTo: calendarImage.trailingAnchor, constant: 4),
+            
+            calendarImage.leadingAnchor.constraint(equalTo: ratingLabel.leadingAnchor, constant: -4),
+            calendarImage.topAnchor.constraint(equalTo: movieLanguageLabel.bottomAnchor),
             
             // movie overview label constaints
             movieOverviewLabel.topAnchor.constraint(equalTo: movieImage.bottomAnchor, constant: 8),
@@ -241,7 +235,7 @@ class DetailPreviewViewController: UIViewController {
         // movie name label
         movieNameLabel.text = viewModel.movieName
         // move release date
-        releaseDateLabel.text = "Released: " + viewModel.movieReleaseDate
+        releaseDateLabel.text = viewModel.movieReleaseDate
         // movie overview
         movieOverviewLabel.text = viewModel.movieOverView
         // url to fetch poster image

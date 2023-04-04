@@ -1,13 +1,13 @@
 //
-//  SearchViewController.swift
+//  DiscoverViewController.swift
 //  iTrailers
 //
 //  Created by Wilson Mungai on 2023-03-07.
 //
 
 import UIKit
-
-class SearchViewController: UIViewController {
+// reponsible for holding search bar and recommended movies
+class DiscoverViewController: UIViewController {
   
     private var moviePoster = [Poster]()
     
@@ -92,7 +92,7 @@ class SearchViewController: UIViewController {
 }
 
 // MARK: - Table view extension
-extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
+extension DiscoverViewController: UITableViewDelegate, UITableViewDataSource {
     // number of cells
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return moviePoster.count
@@ -160,8 +160,9 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         navigationController?.navigationBar.transform = .init(translationX: 0, y: min(0, -offset))
     }
 }
-
-extension SearchViewController: UISearchResultsUpdating, SearchResultsViewControllerDelegate {
+// MARK: - Search extension
+extension DiscoverViewController: UISearchResultsUpdating, SearchResultsViewControllerDelegate {
+    // navigate to detail screen when item is selected
     func searchResultsViewControllerDidTapItem(_ viewModel: PreviewViewModel) {
         DispatchQueue.main.async { [weak self] in
             let vc = DetailPreviewViewController()
@@ -169,16 +170,18 @@ extension SearchViewController: UISearchResultsUpdating, SearchResultsViewContro
             self?.navigationController?.pushViewController(vc, animated: true)
         }
     }
-    
+    // update search results
     func updateSearchResults(for searchController: UISearchController) {
+        // search bar item
         let searchBar = searchController.searchBar
+        // user query
         guard let query = searchBar.text,
               !query.trimmingCharacters(in: .whitespaces).isEmpty,
               query.trimmingCharacters(in: .whitespaces).count >= 2,
               let resultController = searchController.searchResultsController as? SearchResultViewController else { return }
-        
+        // notify
         resultController.delegate = self
-        
+        // serch mover/show with the user query
         NetworkService.shared.searchMovie(with: query) { result in
             DispatchQueue.main.async {
                 switch result {

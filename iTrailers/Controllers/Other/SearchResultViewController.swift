@@ -18,7 +18,6 @@ class SearchResultViewController: UIViewController {
     // delegate
     public weak var delegate: SearchResultsViewControllerDelegate?
     
-//    var movie = [Movie]()
     var movie = [Poster]()
     
     // MARK: - UI Elements
@@ -37,18 +36,12 @@ class SearchResultViewController: UIViewController {
         return collectionView
     }()
 
+    // MARK: - Lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         view.backgroundColor = .systemBackground
         view.addSubview(searchResultCollectionView)
         collectionViewSetup()
-    }
-    
-    // collection view setup
-    func collectionViewSetup() {
-        searchResultCollectionView.delegate = self
-        searchResultCollectionView.dataSource = self
     }
     
     // notify view subviews have been laid iut
@@ -56,9 +49,16 @@ class SearchResultViewController: UIViewController {
         super.viewDidLayoutSubviews()
         searchResultCollectionView.frame = view.bounds
     }
-
+    
+    // MARK: - Private methods
+    // collection view setup
+    private func collectionViewSetup() {
+        searchResultCollectionView.delegate = self
+        searchResultCollectionView.dataSource = self
+    }
 }
 
+// MARK: - Collection view extension
 extension SearchResultViewController: UICollectionViewDelegate, UICollectionViewDataSource  {
     // return number of items
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -109,6 +109,4 @@ extension SearchResultViewController: UICollectionViewDelegate, UICollectionView
             }
         }
     }
-    
-    
 }

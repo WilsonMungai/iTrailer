@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 import CoreData
-
+// core data
 class DataPersistenceManager {
     
     static let shared = DataPersistenceManager()

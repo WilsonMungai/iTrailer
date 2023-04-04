@@ -4,7 +4,7 @@
 //
 //  Created by Wilson Mungai on 2023-03-22.
 //
-
+// responsible for youtube model
 import Foundation
 
 struct YoutubeSearchResponse: Codable {

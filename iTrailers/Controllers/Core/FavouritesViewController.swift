@@ -1,16 +1,16 @@
 //
-//  DownloadViewController.swift
+//  FavouritesViewController.swift
 //  iTrailers
 //
 //  Created by Wilson Mungai on 2023-03-07.
 //
 
 import UIKit
-
-class DownloadViewController: UIViewController {
-    
+// responsible for show favourites items stored in coredata
+class FavouritesViewController: UIViewController {
+    // database entity instance
     private var poster = [PosterItem]()
-    
+    // MARK: - UI Elements
     // table view
     let downloadTabelView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
@@ -20,6 +20,7 @@ class DownloadViewController: UIViewController {
         return tableView
     }()
 
+    // MARK: - Life cycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
@@ -35,18 +36,19 @@ class DownloadViewController: UIViewController {
         super.viewDidLayoutSubviews()
         downloadTabelView.frame = view.bounds
     }
+    
+    // MARK: - Private methods
     // table view setup
     private func tabelViewSetup() {
         downloadTabelView.delegate = self
         downloadTabelView.dataSource = self
-        title = "Favourite"
+        title = "Favourites"
         // title color
         navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.systemIndigo]
         
     }
     // fetch favourites
     private func fetchFavourites() {
-        print("here")
         DataPersistenceManager.shared.fetchSavedData { [weak self] result in
             switch result {
             case .success(let posters):
@@ -63,7 +65,7 @@ class DownloadViewController: UIViewController {
 
 
 // MARK: - Table view extension
-extension DownloadViewController: UITableViewDelegate, UITableViewDataSource {
+extension FavouritesViewController: UITableViewDelegate, UITableViewDataSource {
     // number of items saved
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return poster.count
@@ -97,7 +99,7 @@ extension DownloadViewController: UITableViewDelegate, UITableViewDataSource {
         // when the user scrolls the naviagtion bar moves up
         navigationController?.navigationBar.transform = .init(translationX: 0, y: min(0, -offset))
     }
-    
+    // cell edit controll
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         switch editingStyle {
         case .delete:
@@ -123,7 +125,7 @@ extension DownloadViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let poster = poster[indexPath.row]
-        let posterTitle = poster.title ?? poster.originalTitle ?? ""
+        let posterTitle = poster.title ?? poster.originalTitle ?? poster.name ?? poster.originalName ?? ""
         NetworkService.shared.getTrailer(with: posterTitle) { [weak self] result in
             switch result {
             case .success(let videoElement):

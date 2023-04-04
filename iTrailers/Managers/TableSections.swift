@@ -6,7 +6,7 @@
 //
 
 import Foundation
-
+// table sections
 enum TableSections: Int {
     case Trending = 0
     case Popular = 1

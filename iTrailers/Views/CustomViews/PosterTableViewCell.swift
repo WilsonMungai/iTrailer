@@ -7,7 +7,7 @@
 
 import UIKit
 
-// responsible for showing 
+// responsible for showing discover and favourite cell
 class PosterTableViewCell: UITableViewCell {
     
     static let cellIdentifier = "PosterTableViewCell"
@@ -81,6 +81,20 @@ class PosterTableViewCell: UITableViewCell {
         return label
     }()
     
+    // star rating image
+    private let calendarImage: UIImageView = {
+        let image = UIImageView()
+        image.translatesAutoresizingMaskIntoConstraints = false
+        image.image = UIImage(systemName: "calendar")
+        image.contentMode = .scaleAspectFit
+        image.clipsToBounds = true
+        image.tintColor = UIColor.systemIndigo
+        return image
+    }()
+    
+    
+    
+    
 
 
     // MARK: - initializer
@@ -92,7 +106,8 @@ class PosterTableViewCell: UITableViewCell {
                                 posterLabel,
                                 posterRating,
                                 imageRating,
-                                posterReleaseDate)
+                                posterReleaseDate,
+                                calendarImage)
         addConstraint()
     }
     
@@ -128,10 +143,13 @@ class PosterTableViewCell: UITableViewCell {
             posterRating.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
 //            posterRating.heightAnchor.constraint(equalToConstant: 50),
             
-            posterReleaseDate.leadingAnchor.constraint(equalTo: posterLabel.leadingAnchor),
-            posterReleaseDate.topAnchor.constraint(equalTo: imageRating.bottomAnchor, constant: 8),
-            posterReleaseDate.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
+            posterReleaseDate.leadingAnchor.constraint(equalTo: calendarImage.trailingAnchor, constant: 4),
+            posterReleaseDate.centerYAnchor.constraint(equalTo: calendarImage.centerYAnchor),
+//            posterReleaseDate.topAnchor.constraint(equalTo: imageRating.bottomAnchor, constant: 8),
+//            posterReleaseDate.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
 //            posterReleaseDate.heightAnchor.constraint(equalToConstant: 50)
+            calendarImage.leadingAnchor.constraint(equalTo: posterLabel.leadingAnchor),
+            calendarImage.topAnchor.constraint(equalTo: imageRating.bottomAnchor, constant: 8),
         ])
     }
     
@@ -143,6 +161,7 @@ class PosterTableViewCell: UITableViewCell {
         posterRating.text = String(format: "%.1f", viewModel.posterRating)
         // hook up the poster release date to the view model
         posterReleaseDate.text = viewModel.releasedDate
+        // poster image
         guard let url = URL(string: "https://image.tmdb.org/t/p/w500/\(viewModel.posterImageUrl)") else { return }
         posterImage.sd_setImage(with: url, completed: nil)
     }

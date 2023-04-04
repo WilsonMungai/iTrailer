@@ -6,7 +6,7 @@
 //
 
 import Foundation
-
+// reposnible for discover and favourite cell data
 struct DiscoverViewModel {
     let posterImageUrl: String
     let posterName: String

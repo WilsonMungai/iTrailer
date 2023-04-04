@@ -40,7 +40,7 @@ class MovieCollectionView: UITableViewCell {
     }()
     
     
-    // MARK: - Lifecycle methods
+    // MARK: - Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -51,9 +51,10 @@ class MovieCollectionView: UITableViewCell {
     }
     
     required init?(coder: NSCoder) {
-        fatalError("Unsupported")
+        fatalError("Fatal Error")
     }
     
+    // MARK: - Lifecycle methods
     // Set up frame
     override func layoutSubviews() {
         super.layoutSubviews()

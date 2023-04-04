@@ -47,7 +47,7 @@ class PosterTableViewCell: UITableViewCell {
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .label
-        label.font = UIFont(name:"Arial Rounded MT Bold", size: 24)
+        label.font = UIFont(name:"Arial Rounded MT Bold", size: 20)
         return label
     }()
     
@@ -56,7 +56,7 @@ class PosterTableViewCell: UITableViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "7.5"
-        label.font = .systemFont(ofSize: 18, weight: .bold)
+        label.font = .systemFont(ofSize: 16, weight: .bold)
         return label
     }()
     
@@ -77,7 +77,7 @@ class PosterTableViewCell: UITableViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "March,26,2023"
         label.textColor = .secondaryLabel
-        label.font = .systemFont(ofSize: 16, weight: .semibold)
+        label.font = .systemFont(ofSize: 14, weight: .semibold)
         return label
     }()
     

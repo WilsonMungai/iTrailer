@@ -32,6 +32,7 @@ class NetworkService {
             do {
                 //                let result = try JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed)
                 let result = try JSONDecoder().decode(PosterResult.self, from: data)
+                print(result.results[0].id)
                 completion(.success(result.results))
             } catch {
                 // incase there is an error, print the error
@@ -211,7 +212,6 @@ class NetworkService {
                 let result = try JSONDecoder().decode(YoutubeSearchResponse.self, from: data)
                 // access the items but return the firs index which is the best matching result
                 completion(.success(result.items[0]))
-                print(result)
             }
             catch {
                 print(error)
@@ -234,6 +234,23 @@ class NetworkService {
                 completion(.success(result.results))
             } catch {
                 print(error)
+            }
+        }
+        task.resume()
+    }
+    
+//https://api.themoviedb.org/3/movie/{movie_id}/similar?api_key=<<api_key>>&language=en-US&page=1
+    func fetchSimilar(id: Int, completion: (Result<[Poster], Error>) -> Void) {
+        guard let url = URL(string: "\(Constants.baseUrl)/3/movie/\(id)/similar?api_key=\(Constants.apiKey)&language=en-US&page=1") else { return }
+        
+        let task = URLSession.shared.dataTask(with: url) { data, _, error in
+            guard let data = data, error == nil else { return }
+            do {
+//                let result = try JSONSerialization.data(withJSONObject: data, options: .fragmentsAllowed)
+                let result = try JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed)
+                print(result)
+            } catch {
+                
             }
         }
         task.resume()

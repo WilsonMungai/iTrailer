@@ -105,8 +105,8 @@ extension ShowsViewController: UITableViewDelegate, UITableViewDataSource {
                     print(error.localizedDescription)
                 }
             }
-        default: UITableViewCell()
-//        default: break
+//        default: UITableViewCell()
+        default: break
         }
         
         return cell

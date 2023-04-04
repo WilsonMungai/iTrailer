@@ -10,7 +10,7 @@ import WebKit
 
 class DetailPreviewViewController: UIViewController {
     
-//    var moviePoster: Movie?
+    //    var moviePoster: Movie?
     private var moviePoster: [Poster] = [Poster]()
     
     // MARK: - UI Elements
@@ -18,7 +18,7 @@ class DetailPreviewViewController: UIViewController {
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
-//         scroll view bounds should be set to be bigger than the screen to give room for scrolling
+        //         scroll view bounds should be set to be bigger than the screen to give room for scrolling
         scrollView.alwaysBounceVertical = true
         return scrollView
     }()
@@ -119,21 +119,22 @@ class DetailPreviewViewController: UIViewController {
         button.tintColor = .darkGray
         return button
     }()
-
+    
     // MARK: - Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        view.addSubview(scrollView)
+        
         // add subviews
+        view.addSubview(scrollView)
         scrollView.addSubviews(trailerView,
-                         ratingLabel,
-                         addToFavourite,
-                         movieImage,
-                         movieNameLabel,
-                         releaseDateLabel,
-                         movieLanguageLabel,
-                         movieOverviewLabel)
+                               ratingLabel,
+                               addToFavourite,
+                               movieImage,
+                               movieNameLabel,
+                               releaseDateLabel,
+                               movieLanguageLabel,
+                               movieOverviewLabel)
         // add constraints
         addConstraints()
         addToFavouriteButton()
@@ -145,27 +146,27 @@ class DetailPreviewViewController: UIViewController {
         addToFavourite.addTarget(self, action: #selector(addToFavouriteTapped), for: .touchUpInside)
     }
     @objc private func addToFavouriteTapped() {
-//        let movie = moviePoster
-//        DataPersistenceManager.shared.downloadPoster(model: movie.) { result in
-//            switch result {
-//            case .success():
-//                print("saved to database")
-//            case .failure(let error):
-//                print(error)
-//            }
-//        }
+        //        let movie = moviePoster
+        //        DataPersistenceManager.shared.downloadPoster(model: movie.) { result in
+        //            switch result {
+        //            case .success():
+        //                print("saved to database")
+        //            case .failure(let error):
+        //                print(error)
+        //            }
+        //        }
     }
-//    private func favourite(movie: Movie) {
-//        print("here")
-//        DataPersistenceManager.shared.downloadPoster(model: movie) { result in
-//            switch result {
-//            case .success():
-//                print("saved to database")
-//            case .failure(let error):
-//                print(error)
-//            }
-//        }
-//    }
+    //    private func favourite(movie: Movie) {
+    //        print("here")
+    //        DataPersistenceManager.shared.downloadPoster(model: movie) { result in
+    //            switch result {
+    //            case .success():
+    //                print("saved to database")
+    //            case .failure(let error):
+    //                print(error)
+    //            }
+    //        }
+    //    }
     // MARK: - Layout constraints
     private func addConstraints() {
         NSLayoutConstraint.activate([
@@ -176,9 +177,9 @@ class DetailPreviewViewController: UIViewController {
             scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             
             // trailer web view constraints
-//            trailerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
-//            trailerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
-//            trailerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            //            trailerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
+            //            trailerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
+            //            trailerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             trailerView.topAnchor.constraint(equalTo: view.topAnchor, constant: 50),
             trailerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             trailerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
@@ -223,7 +224,7 @@ class DetailPreviewViewController: UIViewController {
             // movie overview label constaints
             movieOverviewLabel.topAnchor.constraint(equalTo: movieImage.bottomAnchor, constant: 8),
             movieOverviewLabel.leadingAnchor.constraint(equalTo: ratingLabel.leadingAnchor),
-            movieOverviewLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
+            movieOverviewLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
         ])
     }
     

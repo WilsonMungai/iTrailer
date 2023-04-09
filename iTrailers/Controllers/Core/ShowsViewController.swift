@@ -10,7 +10,7 @@ import UIKit
 class ShowsViewController: UIViewController {
     
     // titles of header sections
-    private var sectionTitle: [String] = ["Trending Tv", "Popular Tv", "Airing Today", "Top Rated"]
+    private var sectionTitle: [String] = ["Trending", "Popular", "Top Rated", "Airing Today"]
     
     // object of TrendingTv model
     private var showPoster: [TrendingTv] = [TrendingTv]()
@@ -89,9 +89,9 @@ extension ShowsViewController: UITableViewDelegate, UITableViewDataSource {
                     print(error.localizedDescription)
                 }
             }
-            // now playing tv shows
+            // top rated shows
         case TableSections.NowPlaying.rawValue:
-            NetworkService.shared.getAiringTodayTv { result in
+            NetworkService.shared.getTopRatedTv { result in
                 switch result {
                 case .success(let tv):
                     cell.configure(with: tv)
@@ -99,7 +99,7 @@ extension ShowsViewController: UITableViewDelegate, UITableViewDataSource {
                     print(error.localizedDescription)
                 }
             }
-            // top rated shows
+            // now playing tv shows
         case TableSections.TopRated.rawValue:
             NetworkService.shared.getAiringTodayTv { result in
                 switch result {
@@ -162,5 +162,4 @@ extension ShowsViewController: ShowsCollectionViewTableViewCellDelegate {
             self?.navigationController?.pushViewController(vc, animated: true)
         }
     }
-    
 }

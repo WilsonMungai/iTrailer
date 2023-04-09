@@ -10,7 +10,7 @@ import UIKit
 class HomeViewController: UIViewController {
 
     // list of section titles
-    let sectionTitle: [String] = ["Trending Movies", "Popular", "Now Playing", "Top Rated", "Upcoming Movies"]
+    let sectionTitle: [String] = ["Trending", "Popular", "Now Playing", "Top Rated", "Upcoming"]
     
     // HeaderHeroImageView instance
     private var headerView: HeaderHeroImageView?

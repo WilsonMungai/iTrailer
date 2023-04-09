@@ -91,11 +91,6 @@ class PosterTableViewCell: UITableViewCell {
         image.tintColor = UIColor.systemIndigo
         return image
     }()
-    
-    
-    
-    
-
 
     // MARK: - initializer
     // initialize table view cell

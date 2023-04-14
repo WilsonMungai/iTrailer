@@ -12,9 +12,6 @@ class HomeViewController: UIViewController {
     // list of section titles
     let sectionTitle: [String] = ["Trending", "Popular", "Now Playing", "Top Rated", "Upcoming"]
     
-    // HeaderHeroImageView instance
-    private var headerView: HeaderHeroImageView?
-    
     // Movie model
     private var randomHeaderImage: Poster?
     
@@ -25,8 +22,17 @@ class HomeViewController: UIViewController {
         tableView.register(MovieCollectionView.self,
                            forCellReuseIdentifier: MovieCollectionView.cellIdentifier)
         tableView.separatorColor = UIColor.clear
+        tableView.isHidden = true
         tableView.showsVerticalScrollIndicator = false
         return tableView
+    }()
+    
+    // spinner
+    private let spinner: UIActivityIndicatorView = {
+        let spinner = UIActivityIndicatorView(style: .large)
+        spinner.hidesWhenStopped = true
+        spinner.translatesAutoresizingMaskIntoConstraints = false
+        return spinner
     }()
 
     // MARK: - Lifecycle methods
@@ -35,13 +41,19 @@ class HomeViewController: UIViewController {
         
         // add table view as subview
         view.addSubview(homeTableView)
+        view.addSubview(spinner)
         
         // table view setup
         tableViewSetup()
         
+        // start spinner
+        spinner.startAnimating()
+        
+        // add constraints
+        addConstraints()
+
         // view background color
         view.backgroundColor = .systemBackground
-
     }
     
     override func viewDidLayoutSubviews() {
@@ -49,6 +61,7 @@ class HomeViewController: UIViewController {
         // layout the table view frame
         homeTableView.frame = view.bounds
     }
+    
     // MARK: - Private methods
     // table view setup
     private func tableViewSetup() {
@@ -60,6 +73,16 @@ class HomeViewController: UIViewController {
         
         // title color
         navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.systemIndigo]
+    }
+    
+    // setup constraints
+    private func addConstraints() {
+        NSLayoutConstraint.activate([
+            spinner.widthAnchor.constraint(equalToConstant: 100),
+            spinner.heightAnchor.constraint(equalToConstant: 100),
+            spinner.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            spinner.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+        ])
     }
 }
 
@@ -88,11 +111,15 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             // trending movie section
         case TableSections.Trending.rawValue:
             // fetch the trending movies
-            NetworkService.shared.getTrendingMovie { result in
+            NetworkService.shared.getTrendingMovie { [weak self] result in
                 switch result {
                 case .success(let movie):
                     // when we get the trending movies we configure it to the cell
                     cell.configure(with: movie)
+                    DispatchQueue.main.async {
+                        self?.homeTableView.isHidden = false
+                        self?.spinner.stopAnimating()
+                    }
                 case .failure(let error):
                     print(error.localizedDescription)
                 }

@@ -16,20 +16,31 @@ class FavouritesViewController: UIViewController {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.register(PosterTableViewCell.self, forCellReuseIdentifier: PosterTableViewCell.cellIdentifier)
         tableView.separatorColor = UIColor.clear
+        tableView.isHidden = true
         tableView.showsVerticalScrollIndicator = false
         return tableView
     }()
+    
 
     // MARK: - Life cycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBackground
+        
+        // add subview
         view.addSubview(downloadTabelView)
+        
+        // table view setup
         tabelViewSetup()
+        
+        // API Caller
         fetchFavourites()
+        
+        // notify item has been added to database
         NotificationCenter.default.addObserver(forName: NSNotification.Name("downloaded"), object: nil, queue: nil) { _ in
             self.fetchFavourites()
         }
+        
+        view.backgroundColor = .systemBackground
     }
     // layout subviews
     override func viewDidLayoutSubviews() {
@@ -55,6 +66,7 @@ class FavouritesViewController: UIViewController {
                 self?.poster = posters
                 DispatchQueue.main.async {
                     self?.downloadTabelView.reloadData()
+                    self?.downloadTabelView.isHidden = false
                 }
             case .failure(let error):
                 print(error)

@@ -20,16 +20,36 @@ class ShowsViewController: UIViewController {
         let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.register(ShowsCollectionView.self, forCellReuseIdentifier: ShowsCollectionView.cellIdentifier)
         tableView.separatorColor = UIColor.clear
+        tableView.isHidden = true
         tableView.showsVerticalScrollIndicator = false
         return tableView
+    }()
+    
+    // spinner
+    private let spinner: UIActivityIndicatorView = {
+        let spinner = UIActivityIndicatorView(style: .large)
+        spinner.hidesWhenStopped = true
+        spinner.translatesAutoresizingMaskIntoConstraints = false
+        return spinner
     }()
     
     // MARK: - Lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         view.addSubview(trendingTableView)
-        view.backgroundColor = .systemBackground
+        view.addSubview(spinner)
+        
+        // start spinner
+        spinner.startAnimating()
+        
+        // table view setup
         tabelViewSetup()
+        
+        // add constraints
+        addConstraints()
+        
+        view.backgroundColor = .systemBackground
     }
     
     override func viewDidLayoutSubviews() {
@@ -45,7 +65,16 @@ class ShowsViewController: UIViewController {
         // title color
         navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.systemIndigo]
     }
-    // MARK: - Public methods
+    
+    // setup constraints
+    private func addConstraints() {
+        NSLayoutConstraint.activate([
+            spinner.widthAnchor.constraint(equalToConstant: 100),
+            spinner.heightAnchor.constraint(equalToConstant: 100),
+            spinner.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            spinner.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+        ])
+    }
 }
 
 // MARK: - Table view extension
@@ -71,10 +100,14 @@ extension ShowsViewController: UITableViewDelegate, UITableViewDataSource {
         switch indexPath.section {
             // trending tv shows
         case TableSections.Trending.rawValue:
-            NetworkService.shared.getTrendingTv { result in
+            NetworkService.shared.getTrendingTv { [weak self] result in
                 switch result {
                 case .success(let tv):
                     cell.configure(with: tv)
+                    DispatchQueue.main.async {
+                        self?.trendingTableView.isHidden = false
+                        self?.spinner.stopAnimating()
+                    }
                 case .failure(let error):
                     print(error.localizedDescription)
                 }

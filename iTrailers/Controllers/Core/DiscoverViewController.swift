@@ -15,6 +15,7 @@ class DiscoverViewController: UIViewController {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.register(PosterTableViewCell.self, forCellReuseIdentifier: PosterTableViewCell.cellIdentifier)
         tableView.separatorColor = UIColor.clear
+        tableView.isHidden = true
         tableView.showsVerticalScrollIndicator = false
         return tableView
     }()
@@ -30,13 +31,19 @@ class DiscoverViewController: UIViewController {
         return controller
     }()
     
+    // spinner
+    private let spinner: UIActivityIndicatorView = {
+        let spinner = UIActivityIndicatorView(style: .large)
+        spinner.hidesWhenStopped = true
+        spinner.translatesAutoresizingMaskIntoConstraints = false
+        return spinner
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.addSubview(searchTabelView)
-        
-        view.backgroundColor = .systemBackground
-        
+        view.addSubview(spinner)
        
         // table view setup method
         tabelViewSetup()
@@ -46,6 +53,14 @@ class DiscoverViewController: UIViewController {
         
         // API Caller
         fetchDiscoverMovies()
+        
+        // start animating spinner
+        spinner.startAnimating()
+        
+        // constraints
+        addConstraints()
+        
+        view.backgroundColor = .systemBackground
     }
     // table view frame
     override func viewDidLayoutSubviews() {
@@ -62,9 +77,9 @@ class DiscoverViewController: UIViewController {
         title = "Discover"
         // title color
         navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.systemIndigo]
-        
     }
     
+    // search control setup
     private func searchControllerSetup() {
         // integrate the search controller onto our naivagation stack
         navigationItem.searchController = searchController
@@ -81,14 +96,24 @@ class DiscoverViewController: UIViewController {
                 self?.moviePoster = movies
                 DispatchQueue.main.async {
                     self?.searchTabelView.reloadData()
+                    self?.searchTabelView.isHidden = false
+                    self?.spinner.stopAnimating()
                 }
             case .failure(let error):
                 print(error)
             }
         }
     }
-
-
+    
+    // setup constraints
+    private func addConstraints() {
+        NSLayoutConstraint.activate([
+            spinner.widthAnchor.constraint(equalToConstant: 100),
+            spinner.heightAnchor.constraint(equalToConstant: 100),
+            spinner.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            spinner.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+        ])
+    }
 }
 
 // MARK: - Table view extension

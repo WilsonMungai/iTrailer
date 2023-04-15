@@ -14,6 +14,8 @@ class DetailPreviewViewController: UIViewController {
     //    var moviePoster: Movie?
     private var moviePoster: [Poster] = [Poster]()
     
+    private var savedPoster: Poster?
+    
     // MARK: - UI Elements
     // scroll view
     private let scrollView: UIScrollView = {
@@ -161,6 +163,15 @@ class DetailPreviewViewController: UIViewController {
         addToFavourite.addTarget(self, action: #selector(addToFavouriteTapped), for: .touchUpInside)
     }
     @objc private func addToFavouriteTapped() {
+        guard let poster = savedPoster else { return }
+        DataPersistenceManager.shared.downloadPoster(model: poster) { result in
+            switch result {
+            case .success():
+                NotificationCenter.default.post(name: NSNotification.Name("downloaded"), object: nil)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
     }
     // MARK: - Layout constraints
     private func addConstraints() {

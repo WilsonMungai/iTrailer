@@ -56,8 +56,8 @@ class FavouritesViewController: UIViewController {
         title = "Favourites"
         // title color
         navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.systemIndigo]
-        
     }
+    
     // fetch favourites
     private func fetchFavourites() {
         DataPersistenceManager.shared.fetchSavedData { [weak self] result in
@@ -121,7 +121,7 @@ extension FavouritesViewController: UITableViewDelegate, UITableViewDataSource {
                 case .success():
                     print("Deleted fromt the database")
                 case .failure(let error):
-                    print(error.localizedDescription)
+                    print(error)
                 }
                 // remove the deleted item
                 self?.poster.remove(at: indexPath.row)

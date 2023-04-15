@@ -16,11 +16,14 @@ class DataPersistenceManager {
     func downloadPoster(model: Poster, completion: @escaping (Result<Void, Error>) -> Void) {
         // instance of app delegate
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        
+        // persistentContainer
         let context = appDelegate.persistentContainer.viewContext
         
         // data to be stored in database
         // create an item to be stored in the database, and notify the context
         let item = PosterItem(context: context)
+        
         // field items to be saved in database
         item.id = Int64(model.id)
         item.originalTitle = model.originalTitle

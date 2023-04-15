@@ -8,7 +8,7 @@
 import UIKit
 // reponsible for holding search bar and recommended movies
 class DiscoverViewController: UIViewController {
-  
+    
     private var moviePoster = [Poster]()
     
     let searchTabelView: UITableView = {
@@ -44,7 +44,7 @@ class DiscoverViewController: UIViewController {
         
         view.addSubview(searchTabelView)
         view.addSubview(spinner)
-       
+        
         // table view setup method
         tabelViewSetup()
         
@@ -85,7 +85,7 @@ class DiscoverViewController: UIViewController {
         navigationItem.searchController = searchController
         // update when search is updated
         searchController.searchResultsUpdater = self
-
+        
     }
     
     // fetch the popular movies
@@ -114,6 +114,18 @@ class DiscoverViewController: UIViewController {
             spinner.centerYAnchor.constraint(equalTo: view.centerYAnchor),
         ])
     }
+    
+    // save to coredata method
+    private func downloadTitleAt(indexPath: IndexPath) {
+        DataPersistenceManager.shared.downloadPoster(model: moviePoster[indexPath.row]) { result in
+            switch result {
+            case .success():
+                NotificationCenter.default.post(name: NSNotification.Name("downloaded"), object: nil)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
 }
 
 // MARK: - Table view extension
@@ -128,12 +140,12 @@ extension DiscoverViewController: UITableViewDelegate, UITableViewDataSource {
         let poster = moviePoster[indexPath.row]
         let imagePoster = poster.posterPath ?? ""
         let posterName = poster.originalTitle ?? poster.title ?? poster.name ?? poster.originalName ?? ""
-        let posterRating = poster.voteAverage 
+        let posterRating = poster.voteAverage
         let posterReleaseDate = poster.releaseDate ?? poster.firstAirDate ?? ""
         cell.configure(with: DiscoverViewModel(posterImageUrl: imagePoster,
-                                                posterName: posterName,
-                                                posterRating: posterRating,
-                                                releasedDate: posterReleaseDate))
+                                               posterName: posterName,
+                                               posterRating: posterRating,
+                                               releasedDate: posterReleaseDate))
         cell.selectionStyle = .none
         return cell
     }
@@ -174,6 +186,25 @@ extension DiscoverViewController: UITableViewDelegate, UITableViewDataSource {
                 print(error)
             }
         }
+    }
+    
+    // row configuration action
+    func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        let config = UIContextMenuConfiguration(
+            identifier: nil,
+            previewProvider: nil) { [weak self] _ in
+                // action
+                let downloadAction = UIAction(title: "Download",
+                                              subtitle: nil,
+                                              image: nil,
+                                              identifier: nil,
+                                              discoverabilityTitle: nil,
+                                              state: .off) { _ in
+                    self?.downloadTitleAt(indexPath: indexPath)
+                }
+                return UIMenu(title: "", image: nil, identifier: nil, options: .displayInline, children: [downloadAction])
+            }
+        return config
     }
     
     // tells the delegate when the user scrolls

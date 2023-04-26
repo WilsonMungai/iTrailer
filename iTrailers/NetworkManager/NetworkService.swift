@@ -35,6 +35,7 @@ class NetworkService {
             } catch {
                 // incase there is an error, print the error
                 print(error)
+                completion(.failure(ApiError.failedToGetData))
             }
         }
         task.resume()
@@ -53,6 +54,7 @@ class NetworkService {
                 completion(.success(result.results))
             } catch {
                 print(error)
+                completion(.failure(ApiError.failedToGetData))
             }
         }
         task.resume()
@@ -71,6 +73,7 @@ class NetworkService {
                 completion(.success(result.results))
             } catch {
                 print(error)
+                completion(.failure(ApiError.failedToGetData))
             }
         }
         task.resume()
@@ -89,6 +92,7 @@ class NetworkService {
                 completion(.success(result.results))
             } catch {
                 print(error)
+                completion(.failure(ApiError.failedToGetData))
             }
         }
         task.resume()
@@ -107,6 +111,7 @@ class NetworkService {
                 completion(.success(result.results))
             } catch {
                 print(error)
+                completion(.failure(ApiError.failedToGetData))
             }
         }
         task.resume()
@@ -126,6 +131,7 @@ class NetworkService {
                 completion(.success(result.results))
             } catch {
                 print(error)
+                completion(.failure(ApiError.failedToGetData))
             }
         }
         task.resume()
@@ -145,6 +151,7 @@ class NetworkService {
                 completion(.success(result.results))
             } catch {
                 print(error)
+                completion(.failure(ApiError.failedToGetData))
             }
         }
         task.resume()
@@ -164,6 +171,7 @@ class NetworkService {
                 completion(.success(result.results))
             } catch {
                 print(error)
+                completion(.failure(ApiError.failedToGetData))
             }
         }
         task.resume()
@@ -182,6 +190,7 @@ class NetworkService {
                 completion(.success(result.results))
             } catch {
                 print(error)
+                completion(.failure(ApiError.failedToGetData))
             }
         }
         task.resume()
@@ -204,6 +213,7 @@ class NetworkService {
             }
             catch {
                 print(error)
+                completion(.failure(ApiError.failedToGetData))
             }
         }
         task.resume()
@@ -222,6 +232,7 @@ class NetworkService {
                 completion(.success(result.results))
             } catch {
                 print(error)
+                completion(.failure(ApiError.failedToGetData))
             }
         }
         task.resume()

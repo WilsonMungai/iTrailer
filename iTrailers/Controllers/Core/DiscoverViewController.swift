@@ -194,7 +194,7 @@ extension DiscoverViewController: UITableViewDelegate, UITableViewDataSource {
             identifier: nil,
             previewProvider: nil) { [weak self] _ in
                 // action
-                let downloadAction = UIAction(title: "Download",
+                let downloadAction = UIAction(title: "Favourite",
                                               subtitle: nil,
                                               image: nil,
                                               identifier: nil,

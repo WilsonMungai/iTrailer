@@ -162,6 +162,7 @@ class DetailPreviewViewController: UIViewController {
     private func addToFavouriteButton() {
         addToFavourite.addTarget(self, action: #selector(addToFavouriteTapped), for: .touchUpInside)
     }
+    // MARK: - method not adding to coredata
     @objc private func addToFavouriteTapped() {
         guard let poster = savedPoster else { return }
         DataPersistenceManager.shared.downloadPoster(model: poster) { result in

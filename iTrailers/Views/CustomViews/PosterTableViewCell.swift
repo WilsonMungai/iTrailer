@@ -91,6 +91,14 @@ class PosterTableViewCell: UITableViewCell {
         image.tintColor = UIColor.systemIndigo
         return image
     }()
+    
+    // spinner
+    private let spinner: UIActivityIndicatorView = {
+        let spinner = UIActivityIndicatorView(style: .large)
+        spinner.hidesWhenStopped = true
+        spinner.translatesAutoresizingMaskIntoConstraints = false
+        return spinner
+    }()
 
     // MARK: - initializer
     // initialize table view cell
@@ -102,8 +110,12 @@ class PosterTableViewCell: UITableViewCell {
                                 posterRating,
                                 imageRating,
                                 posterReleaseDate,
-                                calendarImage)
+                                calendarImage,
+                                spinner)
         addConstraint()
+        
+        // start spinner
+        spinner.startAnimating()
     }
     
     required init?(coder: NSCoder) {
@@ -125,26 +137,24 @@ class PosterTableViewCell: UITableViewCell {
             posterLabel.leadingAnchor.constraint(equalTo: posterImage.trailingAnchor, constant: 8),
             posterLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
             posterLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
-//            posterLabel.heightAnchor.constraint(equalToConstant: 50),
             
             imageRating.leadingAnchor.constraint(equalTo: posterLabel.leadingAnchor),
             imageRating.topAnchor.constraint(equalTo: posterLabel.bottomAnchor, constant: 8),
             imageRating.heightAnchor.constraint(equalToConstant: 50),
             imageRating.trailingAnchor.constraint(equalTo: posterRating.leadingAnchor),
             
-//            posterRating.leadingAnchor.constraint(equalTo: posterLabel.leadingAnchor),
             posterRating.centerYAnchor.constraint(equalTo: imageRating.centerYAnchor),
             posterRating.leadingAnchor.constraint(equalTo: imageRating.trailingAnchor, constant: 8),
             posterRating.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
-//            posterRating.heightAnchor.constraint(equalToConstant: 50),
+            
+            calendarImage.leadingAnchor.constraint(equalTo: posterLabel.leadingAnchor),
+            calendarImage.topAnchor.constraint(equalTo: imageRating.bottomAnchor, constant: 8),
             
             posterReleaseDate.leadingAnchor.constraint(equalTo: calendarImage.trailingAnchor, constant: 4),
             posterReleaseDate.centerYAnchor.constraint(equalTo: calendarImage.centerYAnchor),
-//            posterReleaseDate.topAnchor.constraint(equalTo: imageRating.bottomAnchor, constant: 8),
-//            posterReleaseDate.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
-//            posterReleaseDate.heightAnchor.constraint(equalToConstant: 50)
-            calendarImage.leadingAnchor.constraint(equalTo: posterLabel.leadingAnchor),
-            calendarImage.topAnchor.constraint(equalTo: imageRating.bottomAnchor, constant: 8),
+            
+            spinner.centerXAnchor.constraint(equalTo: posterImage.centerXAnchor),
+            spinner.centerYAnchor.constraint(equalTo: posterImage.centerYAnchor),
         ])
     }
     
@@ -159,6 +169,8 @@ class PosterTableViewCell: UITableViewCell {
         // poster image
         guard let url = URL(string: "https://image.tmdb.org/t/p/w500/\(viewModel.posterImageUrl)") else { return }
         posterImage.sd_setImage(with: url, completed: nil)
+        // stop spinner
+        spinner.stopAnimating()
     }
     
 }

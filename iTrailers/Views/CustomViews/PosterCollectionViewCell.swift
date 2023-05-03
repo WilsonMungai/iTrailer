@@ -14,7 +14,7 @@ class PosterCollectionViewCell: UICollectionViewCell {
     // cell identifier
     static let cellIdentifier = "PosterCollectionViewCell"
     
-//    let viewModel: TrendingViewModel
+    //    let viewModel: TrendingViewModel
     
     // MARK: - UI components
     // poster image view
@@ -39,12 +39,20 @@ class PosterCollectionViewCell: UICollectionViewCell {
         label.numberOfLines = 0
         return label
     }()
-
+    
+    // spinner
+    private let spinner: UIActivityIndicatorView = {
+        let spinner = UIActivityIndicatorView(style: .large)
+        spinner.hidesWhenStopped = true
+        spinner.translatesAutoresizingMaskIntoConstraints = false
+        return spinner
+    }()
+    
     // MARK: - init
     override init(frame: CGRect) {
         super.init(frame: frame)
         // add subviews
-        contentView.addSubviews(posterImage,posterLabel)
+        contentView.addSubviews(posterImage,posterLabel,spinner)
         
         // cell background color
         contentView.backgroundColor = .secondarySystemBackground
@@ -54,6 +62,9 @@ class PosterCollectionViewCell: UICollectionViewCell {
         
         // layout constraint
         addConstraint()
+        
+        // animate spinner
+        spinner.startAnimating()
     }
     
     required init?(coder: NSCoder) {
@@ -76,8 +87,6 @@ class PosterCollectionViewCell: UICollectionViewCell {
             posterImage.topAnchor.constraint(equalTo: contentView.topAnchor),
             posterImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             posterImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-//            posterImage.heightAnchor.constraint(equalToConstant: 200),
-//            posterImage.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -4),
             
             // poster name constraint
             posterLabel.topAnchor.constraint(equalTo: posterImage.bottomAnchor),
@@ -85,6 +94,10 @@ class PosterCollectionViewCell: UICollectionViewCell {
             posterLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
             posterLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -4),
             posterLabel.heightAnchor.constraint(equalToConstant: 35),
+            
+            spinner.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            spinner.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            
         ])
     }
     
@@ -94,5 +107,7 @@ class PosterCollectionViewCell: UICollectionViewCell {
         posterLabel.text = viewModel.trendingPosterName
         guard let url = URL(string: "https://image.tmdb.org/t/p/w500/\(viewModel.trendingPosterUrl)") else { return }
         posterImage.sd_setImage(with: url, completed: nil)
+        // stop animating 
+        spinner.stopAnimating()
     }
 }

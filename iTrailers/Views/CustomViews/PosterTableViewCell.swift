@@ -33,10 +33,8 @@ class PosterTableViewCell: UITableViewCell {
         containerView.layer.cornerRadius = 5
         containerView.layer.shadowColor = UIColor.darkGray.cgColor
         containerView.layer.shadowOffset = CGSize(width: -3.0, height: 3.0)
-//        containerView.layer.shadowOffset = CGSize.zero
         containerView.layer.shadowRadius = 5
         containerView.layer.shadowOpacity = 0.9
-//        containerView.layer.shadowPath = UIBezierPath(roundedRect: containerView.bounds, cornerRadius: 10).cgPath
         return containerView
     }()
     

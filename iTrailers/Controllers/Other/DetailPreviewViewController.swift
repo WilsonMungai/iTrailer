@@ -11,7 +11,6 @@ import WebKit
 // responsible for movie/show detail preview
 class DetailPreviewViewController: UIViewController {
     
-    //    var moviePoster: Movie?
     private var moviePoster: [Poster] = [Poster]()
     
     private var savedPoster: Poster?
@@ -123,10 +122,10 @@ class DetailPreviewViewController: UIViewController {
     // add favourite button
     private let addToFavourite: UIButton = {
         var filled = UIButton.Configuration.plain()
-        filled.title = "Favourite"
+//        filled.title = "Favourite"
         filled.buttonSize = .large
         filled.subtitle = ""
-        filled.image = UIImage(systemName: "heart")
+//        filled.image = UIImage(systemName: "heart")
         filled.imagePlacement = .trailing
         filled.imagePadding = 5
         
@@ -160,10 +159,10 @@ class DetailPreviewViewController: UIViewController {
     // MARK: - Private Methods
     // download action
     private func addToFavouriteButton() {
-        addToFavourite.addTarget(self, action: #selector(addToFavouriteTapped), for: .touchUpInside)
+        addToFavourite.addTarget(self, action: #selector(addToFavouriteTapped(_:)), for: .touchUpInside)
     }
     // MARK: - method not adding to coredata
-    @objc private func addToFavouriteTapped() {
+    @objc private func addToFavouriteTapped(_ textfield: UITextField) { // fix this
         guard let poster = savedPoster else { return }
         DataPersistenceManager.shared.downloadPoster(model: poster) { result in
             switch result {
